@@ -28,4 +28,5 @@ map <left> <nop>
 map <right> <nop>
 set bg=dark
 let python_highlight_all = 1
+set nofoldenable
 
