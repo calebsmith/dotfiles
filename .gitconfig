@@ -1,0 +1,11 @@
+[user]
+        name = Caleb Smith
+        email = caleb.smithnc@gmail.com
+[github]
+        user = calebsmith
+[core]
+        editor = vim
+[merge]
+        tool = vimdiff
+[alias]
+        last = log -1
