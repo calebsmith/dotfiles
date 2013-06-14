@@ -45,6 +45,7 @@ set nofoldenable
     "List bundles here
     Bundle 'gmarik/vundle'
     Bundle 'scrooloose/syntastic'
+    Bundle 'pfdevilliers/Pretty-Vim-Python'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
