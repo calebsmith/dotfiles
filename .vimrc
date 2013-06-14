@@ -29,6 +29,7 @@ map <right> <nop>
 set bg=dark
 let python_highlight_all = 1
 set nofoldenable
+set t_Co=256
 
 " Setting up Vundle - the vim plugin bundler
     let iCanHazVundle=1
