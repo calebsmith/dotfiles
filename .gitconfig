@@ -1,11 +1,23 @@
 [user]
-        name = Caleb Smith
-        email = caleb.smithnc@gmail.com
+    name = Caleb Smith
+    email = caleb.smithnc@gmail.com
+
 [github]
-        user = calebsmith
+    user = calebsmith
+
 [core]
-        editor = vim
+    editor = vim
+
 [merge]
-        tool = vimdiff
+    tool = vimdiff
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+
 [alias]
-        last = log -1
+    last = log -1
+    diffp = diff --patience
+    mergep = merge --strategy-option=patience
+
