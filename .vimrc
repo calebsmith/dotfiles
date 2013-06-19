@@ -62,6 +62,9 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
+" Put escape on the home row
+imap jk <Esc>
+
 " Set up Vundle on first install - Vundle, in turn, installs all other plugins
     let iCanHazVundle=1
     let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
