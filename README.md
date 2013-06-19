@@ -1,14 +1,17 @@
 # vimrc
 -------
 
-This is where I keep my configuration files. To use, simply copy the .vimrc file to your home directory. The following commands should suffice:
+This is where I keep my configuration files. To use clone the repo and use
+make. To copy all dotfiles to the home directory use the following commands:
 
 ```
 git clone git://github.com/calebsmith/vimrc
-cp .gitconfig ~
-cp .vimrc ~
+make all
 ```
 
+Use `make vim`, `make git`, or `make tmux` to copy configuration for those
+programs only.
+
 Upon running vim the first time, vundle will be installed, which will install
-the vim bundles in turn.
+the vim bundles defined in .vimrc in turn.
 
