@@ -1,46 +1,68 @@
-if has("autocmd")
-    filetype on
-    filetype indent on
-    filetype plugin on
-endif
-
-set nocompatible
-set autoread
+" Show the title, ruler, status, mode and line numbers
 set showmode
-set showmatch
-set mat=2
+set laststatus=2
+set number
+set title
+set ruler
+
+" This is what files look like
+set encoding=utf8
+set ffs=unix,dos,mac
+
+" From whence you came, you shall remain, until you set, the path again
+set path=$PWD/**
+
+" Tab sanity
 set expandtab
 set smarttab
 set tabstop=4
 set shiftwidth=4
-set laststatus=2
-set path=$PWD/**
-set number
-set hlsearch
-set incsearch
-set history=1000
-set undolevels=1000
-set title
-set ruler
-syntax enable
-set encoding=utf8
-set ffs=unix,dos,mac
+
+" Alas Master Wq, Master Git's wushu is greater
+set autoread
+
+" I don't really need this backup or swapfile stuff thanks to DVC
 set nobackup
 set nowb
 set noswapfile
+
+" Keep lots of history/undo
+set history=1000
+set undolevels=1000
+
+" Use filetype in lieu of compatible if available
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+    set nocompatible
+endif
+
+" Syntax highlighting
+syntax enable
+
+" Highlight with darkred after 80 characters are reached
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%80v.\+/
+
+" Make the background dark and the foreground colorful
+set bg=dark
+set t_Co=256
+
+" Highlight search, show the matches as the search term is typed, and
+" highlight matching punctuation
+set hlsearch
+set incsearch
+set mat=2
+set showmatch
+
+" Pretend arrow keys don't exist - (No cheating!)
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-set bg=dark
-let python_highlight_all = 1
-set nofoldenable
-set t_Co=256
 
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%80v.\+/
-
-" Setting up Vundle - the vim plugin bundler
+" Set up Vundle on first install - Vundle, in turn, installs all other plugins
     let iCanHazVundle=1
     let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
     if !filereadable(vundle_readme)
@@ -61,5 +83,5 @@ match OverLength /\%80v.\+/
         echo ""
         :BundleInstall
     endif
-" Setting up Vundle - the vim plugin bundler end
+" end of vundle setup
 
