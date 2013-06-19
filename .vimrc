@@ -37,6 +37,9 @@ let python_highlight_all = 1
 set nofoldenable
 set t_Co=256
 
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+match OverLength /\%80v.\+/
+
 " Setting up Vundle - the vim plugin bundler
     let iCanHazVundle=1
     let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
