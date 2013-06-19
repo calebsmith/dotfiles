@@ -64,6 +64,7 @@ map <right> <nop>
 
 " Put escape on the home row
 imap jk <Esc>
+imap kj <Esc>
 
 " Set up Vundle on first install - Vundle, in turn, installs all other plugins
     let iCanHazVundle=1
