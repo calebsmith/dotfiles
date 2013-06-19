@@ -1,3 +1,9 @@
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
+
 set nocompatible
 set autoread
 set showmode
