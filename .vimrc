@@ -41,6 +41,10 @@ endif
 " Syntax highlighting
 syntax enable
 
+" Folding
+set foldmethod=indent
+set foldlevel=30
+
 " Highlight with darkred after 80 characters are reached
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 match OverLength /\%80v.\+/
@@ -56,30 +60,29 @@ set incsearch
 set mat=2
 set showmatch
 
-" Define leader
-let mapleader = ","
-
 " Pretend arrow keys don't exist - (No cheating!)
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+vnoremap <up> <nop>
+vnoremap <down> <nop>
+vnoremap <left> <nop>
+vnoremap <right> <nop>
 
 " Put escape on the home row
-imap jk <Esc>
-imap kj <Esc>
+inoremap jk <esc>
+inoremap kj <esc>
 
-" For laziness:
-"   Make ; into :
-"   Make tab do <goto>
+" Define leader
+let mapleader = ","
+
+" Define leader commands:
 "   Make leader space clear search
-nnoremap ; :
-nnoremap <tab> %
-vnoremap <tab> %
 nnoremap <leader><space> :noh<cr>
 
 
