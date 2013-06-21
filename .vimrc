@@ -56,15 +56,32 @@ set incsearch
 set mat=2
 set showmatch
 
+" Define leader
+let mapleader = ","
+
 " Pretend arrow keys don't exist - (No cheating!)
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
 " Put escape on the home row
 imap jk <Esc>
 imap kj <Esc>
+
+" For laziness:
+"   Make ; into :
+"   Make tab do <goto>
+"   Make leader space clear search
+nnoremap ; :
+nnoremap <tab> %
+vnoremap <tab> %
+nnoremap <leader><space> :noh<cr>
+
 
 " Set up Vundle on first install - Vundle, in turn, installs all other plugins
     let iCanHazVundle=1
