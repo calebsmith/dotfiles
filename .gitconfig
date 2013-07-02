@@ -19,7 +19,8 @@
 [alias]
     network = log --oneline --graph
     last = log -1
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 
     diffp = diff --patience
     mergep = merge --strategy-option=patience
-
