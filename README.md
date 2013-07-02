@@ -9,6 +9,8 @@ git clone git://github.com/calebsmith/vimrc
 make
 ```
 
+Change the [user] and [github] sections with your own name, email and github username unless you are me
+
 Use `make vim`, `make git`, or `make tmux` to copy configuration for those
 programs only.
 
