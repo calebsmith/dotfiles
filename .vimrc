@@ -109,3 +109,6 @@ nnoremap <leader><space> :noh<cr>
     endif
 " end of vundle setup
 
+" Syntastic Configuration
+let g:syntastic_python_checkers = ['pyflakes']
+
