@@ -17,6 +17,7 @@ set expandtab
 set smarttab
 set tabstop=4
 set shiftwidth=4
+set backspace+=start,eol,indent
 
 " Alas Master Wq, Master Git's wushu is greater
 set autoread
