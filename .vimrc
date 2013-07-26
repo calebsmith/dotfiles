@@ -126,6 +126,7 @@ nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
     Bundle 'gmarik/vundle'
     Bundle 'scrooloose/syntastic'
     Bundle 'pfdevilliers/Pretty-Vim-Python'
+    Bundle 'Valloric/YouCompleteMe'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -136,6 +137,10 @@ nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 " Syntastic Configuration
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
+
+" YCM Configuration
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Custom Functions
