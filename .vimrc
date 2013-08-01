@@ -1,3 +1,7 @@
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Override of Defaults
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 " Show the title, ruler, status, mode and line numbers
 set showmode
 set laststatus=2
@@ -20,9 +24,8 @@ set shiftwidth=4
 set backspace+=start,eol,indent
 
 " Alas Master Wq, Master Git's wushu is greater
+" (I don't really need this backup or swapfile stuff thanks to DVC)
 set autoread
-
-" I don't really need this backup or swapfile stuff thanks to DVC
 set nobackup
 set nowb
 set noswapfile
@@ -42,21 +45,23 @@ endif
 " Syntax highlighting
 syntax enable
 
-" Folding
+" Enable folding but leave it unfolded by default
 set foldmethod=indent
 set foldlevel=30
+" Fold commands
+" zR    open all folds
+" zM    close all folds
+" za    toggle fold at cursor position
+" zj    move down to start of next fold
+" zk    move up to end of previous fold
 
 
-" Highlights
-" red for trailing white space after insert
+" Highlight red for trailing white space after insert or for line too long
 highlight ExtraWhitespace ctermbg=red guibg=red
-" darkred after 80 characters are reached
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-autocmd Syntax * syn match OverLength /\%80v.\+/ containedin=ALL
 
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|\%80v.\+/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$\|\%80v.\+/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$\|\%80v.\+/
 autocmd BufWinLeave * call clearmatches()
 
 " Make the background dark and the foreground colorful
@@ -69,6 +74,10 @@ set hlsearch
 set incsearch
 set mat=2
 set showmatch
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Key Mappings
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Pretend arrow keys don't exist - (No cheating!)
 nnoremap <up> <nop>
@@ -88,13 +97,18 @@ vnoremap <right> <nop>
 inoremap jk <esc>
 inoremap kj <esc>
 
-" Define leader
+" Define leader key
 let mapleader = ","
 
 " Define leader commands:
 "   Make leader space clear search
 nnoremap <leader><space> :noh<cr>
+nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Plugin Bootstrap and Configuration
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Set up Vundle on first install - Vundle, in turn, installs all other plugins
     let iCanHazVundle=1
@@ -123,3 +137,25 @@ nnoremap <leader><space> :noh<cr>
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Custom Functions
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+" Whitespace
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+" A function to strip trailing whitespace and clean up afterwards so
+" that the search history remains intact and cursor does not move.
+" Taken from: http://vimcasts.org/episodes/tidying-whitespace
+" Taken in turn from: https://github.com/nrb/dotfiles/blob/master/.vimrc
+function! StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
