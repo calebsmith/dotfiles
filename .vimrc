@@ -112,4 +112,5 @@ nnoremap <leader><space> :noh<cr>
 
 " Syntastic Configuration
 let g:syntastic_python_checkers = ['pyflakes']
+let g:syntastic_c_checkers = ['splint']
 
