@@ -54,7 +54,6 @@ match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches() red for whitespace at EOL
 " darkred after 80 characters are reached
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 match OverLength /\%80v.\+/
