@@ -46,9 +46,19 @@ syntax enable
 set foldmethod=indent
 set foldlevel=30
 
-" Highlight with darkred after 80 characters are reached
+
+" Highlights
+" red for trailing white space after insert
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches() red for whitespace at EOL
+" darkred after 80 characters are reached
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
 match OverLength /\%80v.\+/
+
 
 " Make the background dark and the foreground colorful
 set bg=dark
