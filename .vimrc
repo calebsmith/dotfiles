@@ -50,14 +50,14 @@ set foldlevel=30
 " Highlights
 " red for trailing white space after insert
 highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+" darkred after 80 characters are reached
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
+autocmd Syntax * syn match OverLength /\%80v.\+/ containedin=ALL
+
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-" darkred after 80 characters are reached
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#592929
-match OverLength /\%80v.\+/
-
+autocmd BufWinLeave * call clearmatches()
 
 " Make the background dark and the foreground colorful
 set bg=dark
