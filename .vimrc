@@ -127,6 +127,7 @@ nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
     Bundle 'scrooloose/syntastic'
     Bundle 'pfdevilliers/Pretty-Vim-Python'
     Bundle 'Valloric/YouCompleteMe'
+    Bundle 'szw/vim-tags'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -140,6 +141,12 @@ let g:syntastic_c_checkers = ['splint']
 
 " YCM Configuration
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+" vim-tags Configuration
+let g:vim_tags_use_ycm = 1
 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
