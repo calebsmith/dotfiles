@@ -1,4 +1,4 @@
-/* Linux kernel style indent */
+/* Linux kernel style indent (But use spaces for tabs) */
 -nbad
 -bap
 -nbc
@@ -33,3 +33,4 @@
 -ss
 -ts8
 -il1
+-nut
