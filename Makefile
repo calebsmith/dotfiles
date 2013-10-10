@@ -5,12 +5,12 @@ all:
 	make indent
 
 tmux:
-	cp .tmux.conf ~
+	cp tmux.conf ~/.tmux.conf
 
 git:
-	cp .gitconfig ~
+	cp gitconfig ~/.gitconfig
 
 vim:
-	cp .vimrc ~
+	cp vimrc ~/.vimrc
 indent:
-	cp .indent.pro ~
+	cp indent.pro ~/.indent.pro
