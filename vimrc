@@ -2,12 +2,15 @@
 " Override of Defaults
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-" Show the title, ruler, status, mode and line numbers
+" Show the title, ruler, status, and mode
 set showmode
 set laststatus=2
-set number
 set title
 set ruler
+
+" Use 'hybrid' mode for line numbers
+set relativenumber
+set number
 
 " This is what files look like
 set encoding=utf8
