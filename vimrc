@@ -8,8 +8,7 @@ set laststatus=2
 set title
 set ruler
 
-" Use 'hybrid' mode for line numbers
-set relativenumber
+" Use absolute line numbers
 set number
 
 " This is what files look like
@@ -107,7 +106,9 @@ let mapleader = ","
 "   Make leader space clear search
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
-
+nnoremap <leader>i :BundleInstall<cr>
+nnoremap <leader>m :Make<cr>
+nnoremap <leader>M :Make!<cr>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Bootstrap and Configuration
@@ -131,6 +132,7 @@ nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
     Bundle 'pfdevilliers/Pretty-Vim-Python'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'szw/vim-tags'
+    Bundle 'tpope/vim-dispatch'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
