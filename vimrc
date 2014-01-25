@@ -106,9 +106,10 @@ let mapleader = ","
 "   Make leader space clear search
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
+nnoremap <leader>f :call ToggleFold()<cr>
 nnoremap <leader>i :BundleInstall<cr>
-nnoremap <leader>m :Make<cr>
-nnoremap <leader>M :Make!<cr>
+nnoremap <leader>m :Make!<cr>
+nnoremap <leader>o :Copen<cr>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Bootstrap and Configuration
@@ -175,4 +176,22 @@ function! StripTrailingWhitespaces()
     " Clean up: restore previous search history, and cursor position
     let @/=_s
     call cursor(l, c)
+endfunction
+
+" Folding
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" A function to quickly toggle folding and unfolding everything
+function! ToggleFold()
+    if exists("g:code_is_folded")
+        if g:code_is_folded == 1
+            set foldlevel=30
+            let g:code_is_folded = 0
+        else
+            set foldlevel=0
+            let g:code_is_folded = 1
+        endif
+    else
+        set foldlevel=0
+        let g:code_is_folded = 1
+    endif
 endfunction
