@@ -99,6 +99,10 @@ vnoremap <right> <nop>
 inoremap jk <esc>
 inoremap kj <esc>
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Leader Configuration
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 " Define leader key
 let mapleader = ","
 
@@ -109,10 +113,12 @@ nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 nnoremap <leader>f :call ToggleFold()<cr>
 nnoremap <leader>i :BundleInstall<cr>
 nnoremap <leader>m :Make!<cr>
+nnoremap <leader>d :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
 
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Plugin Bootstrap and Configuration
+" Plugin Installation
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Set up Vundle on first install - Vundle, in turn, installs all other plugins
@@ -141,6 +147,10 @@ nnoremap <leader>o :Copen<cr>
     endif
 " end of vundle setup
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Plugin Configuration
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 " Syntastic Configuration
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
@@ -153,6 +163,9 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " vim-tags Configuration
 let g:vim_tags_use_ycm = 1
+
+" Dispatch Configuration
+autocmd FileType erlang let b:dispatch = 'erl -make'
 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
