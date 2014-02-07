@@ -140,6 +140,7 @@ nnoremap <leader>o :Copen<cr>
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'szw/vim-tags'
     Bundle 'tpope/vim-dispatch'
+    Bundle 'amdt/vim-niji'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
