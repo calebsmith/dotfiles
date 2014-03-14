@@ -8,6 +8,9 @@
 [core]
     editor = vim
 
+[push]
+    default = current
+
 [merge]
     tool = vimdiff
 
