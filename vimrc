@@ -109,12 +109,17 @@ let mapleader = ","
 " Define leader commands:
 "   Make leader space clear search
 nnoremap <leader><space> :noh<cr>
+" Leaders for custom functions
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 nnoremap <leader>f :call ToggleFold()<cr>
-nnoremap <leader>i :BundleInstall<cr>
+" Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
 nnoremap <leader>d :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
+" Leaders for nerdtree
+nnoremap <leader>t :NERDTreeToggle<cr>
+" Misc leaders
+nnoremap <leader>i :BundleInstall<cr>
 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,11 +141,12 @@ nnoremap <leader>o :Copen<cr>
     "List bundles here
     Bundle 'gmarik/vundle'
     Bundle 'scrooloose/syntastic'
-    Bundle 'pfdevilliers/Pretty-Vim-Python'
     Bundle 'Valloric/YouCompleteMe'
+    Bundle 'scrooloose/nerdtree'
     Bundle 'szw/vim-tags'
     Bundle 'tpope/vim-dispatch'
     Bundle 'amdt/vim-niji'
+    Bundle 'pfdevilliers/Pretty-Vim-Python'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -170,6 +176,9 @@ let g:vim_tags_use_ycm = 1
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
 
+" NerdTree Configuration
+autocmd vimenter * if !argc() | NERDTree| endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Custom Functions
