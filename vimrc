@@ -155,6 +155,8 @@ nnoremap <leader>o :Copen<cr>
 " Syntastic Configuration
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_aggregate_errors = 1
 
 " YCM Configuration
 let g:ycm_autoclose_preview_window_after_insertion = 1
