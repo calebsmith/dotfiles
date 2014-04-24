@@ -25,6 +25,10 @@ set tabstop=4
 set shiftwidth=4
 set backspace+=start,eol,indent
 
+" Show hidden characters, tabs, trailing whitespace
+set list
+set listchars=tab:→\ ,trail:·,nbsp:·
+
 " Alas Master Wq, Master Git's wushu is greater
 " (I don't really need this backup or swapfile stuff thanks to DVC)
 set autoread
@@ -98,6 +102,9 @@ vnoremap <right> <nop>
 " Put escape on the home row
 inoremap jk <esc>
 inoremap kj <esc>
+
+" Shortcuts
+set pastetoggle=<F2>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
