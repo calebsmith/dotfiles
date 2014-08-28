@@ -65,10 +65,29 @@ set foldlevel=30
 " Highlight red for trailing white space after insert or for line too long
 highlight ExtraWhitespace ctermbg=red guibg=red
 
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|\%80v.\+/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$\|\%80v.\+/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$\|\%80v.\+/
-autocmd BufWinLeave * call clearmatches()
+function! WarnHighlight()
+    if g:warn_highlight_set == 1
+        autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+        autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+        autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+        autocmd BufWinLeave * call clearmatches()
+        call clearmatches()
+        match ExtraWhitespace /\s\+\%#\@<!$/
+        let g:warn_highlight_set = 0
+    else
+        autocmd BufWinEnter * match ExtraWhitespace /\s\+$\|\%80v.\+/
+        autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$\|\%80v.\+/
+        autocmd InsertLeave * match ExtraWhitespace /\s\+$\|\%80v.\+/
+        autocmd BufWinLeave * call clearmatches()
+        call clearmatches()
+        match ExtraWhitespace /\s\+\%#\@<!$\|\%80v.\+/
+        match ExtraWhitespace /\s\+$\|\%80v.\+/
+        let g:warn_highlight_set = 1
+    endif
+endfunction
+let g:warn_highlight_set = 0
+call WarnHighlight()
+
 
 " Make the background dark and the foreground colorful
 set bg=dark
@@ -119,6 +138,7 @@ nnoremap <leader><space> :noh<cr>
 " Leaders for custom functions
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 nnoremap <leader>f :call ToggleFold()<cr>
+nnoremap <leader>h :call WarnHighlight()<cr>
 " Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
 nnoremap <leader>d :Dispatch<cr>
