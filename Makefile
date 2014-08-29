@@ -9,6 +9,7 @@ tmux:
 
 git:
 	cp gitconfig ~/.gitconfig
+	cp gitignore ~/.gitignore
 
 vim:
 	cp vimrc ~/.vimrc

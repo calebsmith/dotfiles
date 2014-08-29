@@ -6,6 +6,7 @@
     user = calebsmith
 
 [core]
+    excludesfile = ~/.gitignore
     editor = vim
 
 [push]
