@@ -103,6 +103,10 @@ vnoremap <right> <nop>
 inoremap jk <esc>
 inoremap kj <esc>
 
+" Don't skip wrapped lines when navigating
+nnoremap j gj
+nnoremap k gk
+
 " Shortcuts
 set pastetoggle=<F2>
 
@@ -121,35 +125,46 @@ let mapleader = ","
 
 " Define leader commands:
 
-" See mappings
+" See list of mappings
 nnoremap <leader>? :map<cr>
-" Make leader space clear search
-nnoremap <leader><space> :noh<cr>
+
 " Leaders for custom functions
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
 nnoremap <leader>c :call ToggleColorColumn()<cr>
 nnoremap <leader>F :call ToggleFold()<cr>
+
+" Leaders for custom shortcuts
 nnoremap <leader>f za
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p :set paste<cr>"+p :set nopaste<cr>
+
 " Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
 nnoremap <leader>d :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
-" Leaders for tags
+
+" Leaders for ctags
 nnoremap <leader>tg :TagsGenerate<cr>
 nnoremap <leader>j :tjump<space>
+
 " Enable Zen Mode
 nnoremap <Leader>z :LiteDFMToggle<CR>:silent !tmux set status > /dev/null 2>&1<CR>:redraw!<CR>
 
-" Misc leaders
-nnoremap <leader>i :BundleInstall<cr>
-nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:w!<cr>
-nnoremap <leader>l :exe "source ~/.vim/.sessions/latest.vim"<cr>
-nnoremap <leader>r :source ~/.vimrc<cr>
-
+" Lusty Explorer bindings
 nnoremap <leader>e :LustyFilesystemExplorer<cr>
 nnoremap <leader>eh :LustyFilesystemExplorerFromHere<cr>
 nnoremap <leader>b :LustyBufferExplorer<cr>
 nnoremap <leader>g :LustyBufferGrep<cr>
+
+" Misc leaders for save/load/sourcing
+nnoremap <leader>i :BundleInstall<cr>
+nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksession! .session.vim"<cr>:w!<cr>
+nnoremap <leader>l :exe "source .session.vim"<cr>
+nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
+nnoremap <leader>r :source ~/.vimrc<cr>
+
 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
