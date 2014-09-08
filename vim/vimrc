@@ -1,24 +1,32 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " General Override of Defaults
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+set exrc
+set secure
+set wildmenu
+set ttyfast
 
 " Show the title, ruler, status, mode, and absolute line numbers
 set showmode
+set showcmd
+set scrolloff=3
 set laststatus=2
 set title
 set ruler
 set number
 set hidden
 
+
 " This is what files look like
 set encoding=utf8
 set ffs=unix,dos,mac
-set wildignore=*.pyc,*.pyo,*.o,*.so,*.out
+"set wildignore=*.pyc,*.pyo,*.o,*.so,*.out
 
 " From whence you came, you shall remain, until you set, the path again
 set path=$PWD/**
 
 " Tab sanity
+set autoindent
 set expandtab
 set smarttab
 set tabstop=4
@@ -33,6 +41,7 @@ set listchars=tab:→\ ,trail:·,nbsp:·
 " (I don't really need this backup or swapfile stuff thanks to DVC)
 set autoread
 set nobackup
+set nowritebackup
 set nowb
 set noswapfile
 
@@ -63,7 +72,8 @@ set foldlevel=30
 
 " Highlight red for trailing white space
 highlight WarnHighlight ctermbg=red guibg=red
-highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
+highlight ColorColumn ctermbg=black guibg=black
+highlight ColorColumn ctermbg=black guibg=black
 
 autocmd BufWinEnter * match WarnHighlight /\s\+$/
 autocmd InsertEnter * match WarnHighlight /\s\+\%#\@<!$/
@@ -146,7 +156,7 @@ nnoremap <leader>d :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
 
 " Leaders for ctags
-nnoremap <leader>tg :TagsGenerate<cr>
+nnoremap <leader>tg :TagsGenerate!<cr>
 nnoremap <leader>j :tjump<space>
 
 " Enable Zen Mode
@@ -166,7 +176,6 @@ nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
 
 
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,16 +192,23 @@ nnoremap <leader>r :source ~/.vimrc<cr>
     endif
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
-    "List bundles here
+    " List bundles here
+    " ~~~~~~~~~~~~~~~~~
+
+    " General
     Bundle 'gmarik/vundle'
+    Bundle 'sjbach/lusty'
     Bundle 'scrooloose/syntastic'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'szw/vim-tags'
     Bundle 'tpope/vim-dispatch'
-    Bundle 'amdt/vim-niji'
-    Bundle 'pfdevilliers/Pretty-Vim-Python'
     Bundle 'bilalq/lite-dfm'
-    Bundle 'sjbach/lusty'
+    " Lisps
+    Bundle 'amdt/vim-niji'
+    " Python
+    Bundle 'pfdevilliers/Pretty-Vim-Python'
+    " Android
+    Bundle 'hsanson/vim-android'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -217,13 +233,18 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " vim-tags Configuration
 let g:vim_tags_use_ycm = 1
+let g:vim_tags_use_vim_dispatch = 1
 
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
 
 " LiteDFM Configuration
 let g:lite_dfm_normal_bg_cterm = 234
-let g:lite_dfm_left_offset = 4
+let g:lite_dfm_left_offset = 15
+
+" vim-android Configuration
+let g:android_sdk_path = '/opt/android-sdk'
+let g:EclimCompletionMethod = 'omnifunc'
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Custom Functions
