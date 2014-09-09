@@ -29,6 +29,7 @@ indent:
 
 xmonad:
 	@(source ./safe_copy.sh; \
-	safe_copy xmonad/xmonad.hs ~/.xmonad/xmonad.hs \
-	safe_copy xmonad/xmobarrc ~/.xmobarrc \
+	safe_copy xmonad/xmobarrc ~/.xmobarrc; \
+	[ $$safe_copy_result -ne 0 ] || xmonad --recompile; \
+	safe_copy xmonad/xmonad.hs ~/.xmonad/xmonad.hs; \
 	[ $$safe_copy_result -ne 0 ] || xmonad --recompile)
