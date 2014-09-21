@@ -304,17 +304,26 @@ if !exists("g:show_column_toggle")
     call ToggleColorColumn()
 endif
 
-" Per Language Custom Configuration
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Conceals for lambdas
+" ~~~~~~~~~~~~~~~~~~~~
 "
 
 " Scheme
+"   Taken from dkinzer/vim-schemer
 " ~~~~~~~~~~~~~~~~~~~~~~~
-" Show lambdas as  λ
-"   Taken fromdkinzer/vim-schemer
 if has('conceal')
-  au BufRead *.scm syntax keyword Statement lambda conceal cchar=λ
-  au BufRead *.scm hi! link Conceal Statement
-  au BufRead *.scm set conceallevel=2
-  au BufRead *.scm set concealcursor=nc
+    au BufRead *.scm syntax keyword Statement lambda conceal cchar=λ
+    au BufRead *.scm hi! link Conceal Statement
+    au BufRead *.scm set conceallevel=2
+    au BufRead *.scm set concealcursor=nc
+endif
+
+" JavaScript
+"   Taken from tyok/js-mask
+" ~~~~~~~~~~~~~~~~~~~~~~~
+if has('conceal')
+    au BufRead *.js syntax keyword javaScriptLambda function conceal cchar=λ
+    au BufRead *.js hi! link Conceal javaScriptLambda
+    au BufRead *.js set conceallevel=2
+    au BufRead *.js set concealcursor=nc
 endif
