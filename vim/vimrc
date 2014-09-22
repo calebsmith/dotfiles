@@ -205,11 +205,11 @@ nnoremap <leader>r :source ~/.vimrc<cr>
     Bundle 'szw/vim-tags'
     Bundle 'tpope/vim-dispatch'
     Bundle 'bilalq/lite-dfm'
+    Bundle 'calebsmith/vim-lambdify'
     " Lisps
     Bundle 'amdt/vim-niji'
     " Python
     Bundle 'pfdevilliers/Pretty-Vim-Python'
-    Bundle 'ehamberg/vim-cute-python'
     " Android
     Bundle 'hsanson/vim-android'
     if iCanHazVundle == 0
@@ -302,28 +302,4 @@ endfunction
 if !exists("g:show_column_toggle")
     let g:show_column_toggle = 0
     call ToggleColorColumn()
-endif
-
-" Conceals for lambdas
-" ~~~~~~~~~~~~~~~~~~~~
-"
-
-" Scheme
-"   Taken from dkinzer/vim-schemer
-" ~~~~~~~~~~~~~~~~~~~~~~~
-if has('conceal')
-    au BufRead *.scm syntax keyword Statement lambda conceal cchar=λ
-    au BufRead *.scm hi! link Conceal Statement
-    au BufRead *.scm set conceallevel=2
-    au BufRead *.scm set concealcursor=nc
-endif
-
-" JavaScript
-"   Taken from tyok/js-mask
-" ~~~~~~~~~~~~~~~~~~~~~~~
-if has('conceal')
-    au BufRead *.js syntax keyword javaScriptLambda function conceal cchar=λ
-    au BufRead *.js hi! link Conceal javaScriptLambda
-    au BufRead *.js set conceallevel=2
-    au BufRead *.js set concealcursor=nc
 endif
