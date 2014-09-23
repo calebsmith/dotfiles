@@ -212,6 +212,8 @@ nnoremap <leader>r :source ~/.vimrc<cr>
     Bundle 'pfdevilliers/Pretty-Vim-Python'
     " Android
     Bundle 'hsanson/vim-android'
+    " JavaScript
+    Bundle 'pangloss/vim-javascript'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
