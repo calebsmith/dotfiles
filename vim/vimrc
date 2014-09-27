@@ -154,7 +154,7 @@ nnoremap <leader>p :set paste<cr>"+p :set nopaste<cr>
 
 " Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
-nnoremap <leader>d :Dispatch<cr>
+nnoremap <leader>d :Dispatch!<cr>
 nnoremap <leader>o :Copen<cr>
 
 " Leaders for ctags
@@ -214,6 +214,8 @@ nnoremap <leader>r :source ~/.vimrc<cr>
     Bundle 'hsanson/vim-android'
     " JavaScript
     Bundle 'pangloss/vim-javascript'
+    " Clojure
+    Bundle 'vim-scripts/VimClojure'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -242,6 +244,10 @@ let g:vim_tags_use_vim_dispatch = 1
 
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
+
+if android#isAndroidProject()
+    autocmd FileType java let b:dispatch = 'source ~/bin/android_helpers.sh; android_go'
+endif
 
 " LiteDFM Configuration
 let g:lite_dfm_normal_bg_cterm = 234
