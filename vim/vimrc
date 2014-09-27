@@ -90,6 +90,8 @@ set hlsearch
 set incsearch
 set mat=2
 set showmatch
+set ignorecase
+set smartcase
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Key Mappings
@@ -128,6 +130,10 @@ map <C-l> <C-w>l
 
 " sudo to write
 cmap w!! w !sudo tee % >/dev/null
+
+" Make enter save
+nnoremap <CR> :w! <CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,6 +237,7 @@ nnoremap <leader>r :source ~/.vimrc<cr>
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_java_checkers = ['jlint']
 let g:syntastic_aggregate_errors = 1
 
 " YCM Configuration
