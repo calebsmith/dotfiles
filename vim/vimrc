@@ -128,6 +128,16 @@ map <C-l> <C-w>l
 
 " sudo to write
 cmap w!! w !sudo tee % >/dev/null
+
+" For vimdiff
+
+if &diff
+    map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+    map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+    map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+    set statusline=%-10.3n  "buffer number
+endif
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,6 +240,7 @@ let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
 
 " YCM Configuration
 let g:ycm_autoclose_preview_window_after_insertion = 1
