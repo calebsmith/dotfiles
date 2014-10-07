@@ -190,6 +190,7 @@ nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksess
 nnoremap <leader>l :exe "source .session.vim"<cr>
 nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
+nnoremap <leader>q :bufdo q<cr>
 
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
