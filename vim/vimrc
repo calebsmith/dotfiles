@@ -134,14 +134,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Make enter save
 nnoremap <CR> :w! <CR>
 
-" For vimdiff
-if &diff
-    map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
-    map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
-    map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
-    set statusline=%-10.3n  "buffer number
-endif
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,6 +184,13 @@ nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
 nnoremap <leader>q :bufdo q<cr>
 
+" For vimdiff
+if &diff
+    map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+    map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+    map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+    set statusline=%-10.3n  "buffer number
+endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
