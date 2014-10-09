@@ -184,7 +184,15 @@ nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksess
 nnoremap <leader>l :exe "source .session.vim"<cr>
 nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
+nnoremap <leader>q :bufdo q<cr>
 
+" For vimdiff
+if &diff
+    map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+    map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+    map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+    set statusline=%-10.3n  "buffer number
+endif
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
@@ -241,6 +249,7 @@ let g:syntastic_c_checkers = ['splint']
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_java_checkers = ['jlint']
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_always_populate_loc_list = 1
 
 " YCM Configuration
 let g:ycm_autoclose_preview_window_after_insertion = 1

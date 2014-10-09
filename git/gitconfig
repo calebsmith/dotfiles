@@ -15,6 +15,13 @@
 [merge]
     tool = vimdiff
 
+[mergetool]
+    prompt = false
+    keepBackup = false
+
+[diff]
+    tool = vimdiff
+
 [color]
     diff = auto
     status = auto

@@ -4,6 +4,9 @@
 # if so and stores a backup of the target in /backups
 safe_copy() {
     # Check for destination directory and create it if needed
+    if ! [[ -d backups ]] ; then
+        mkdir backups
+    fi
     if ! [[ -d `dirname $2` ]] | [[ -f $2 ]] ; then
         mkdir -p $(dirname $2)
         cp $1 $2
