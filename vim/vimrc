@@ -194,6 +194,8 @@ if &diff
     set statusline=%-10.3n  "buffer number
 endif
 
+nnoremap <NL> :w!<CR>:Require<CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,6 +234,10 @@ endif
     Bundle 'pangloss/vim-javascript'
     " Clojure
     Bundle 'vim-scripts/VimClojure'
+    Bundle 'tpope/vim-leiningen'
+    Bundle 'tpope/vim-projectionist'
+    Bundle 'tpope/vim-fireplace'
+
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -274,6 +280,10 @@ let g:lite_dfm_left_offset = 15
 " vim-android Configuration
 let g:android_sdk_path = '/opt/android-sdk'
 let g:EclimCompletionMethod = 'omnifunc'
+
+" vim clojure
+let g:vimclojure#HighlightBuiltins = 1
+let g:vimclojure#ParenRainbow = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Custom Functions
