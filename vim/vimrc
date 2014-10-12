@@ -226,16 +226,16 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Bundle 'calebsmith/vim-lambdify'
     Bundle 'tpope/vim-repeat'
     Bundle 'tpope/vim-surround'
-    " Lisps
-    Bundle 'amdt/vim-niji'
-    Bundle 'guns/vim-sexp'
-    Bundle 'tpope/vim-sexp-mappings-for-regular-people'
     " Python
     Bundle 'pfdevilliers/Pretty-Vim-Python'
     " Android
     Bundle 'hsanson/vim-android'
     " JavaScript
     Bundle 'pangloss/vim-javascript'
+    " Lisps
+    Bundle 'amdt/vim-niji'
+    Bundle 'guns/vim-sexp'
+    Bundle 'tpope/vim-sexp-mappings-for-regular-people'
     " Clojure
     Bundle 'vim-scripts/VimClojure'
     Bundle 'tpope/vim-leiningen'
