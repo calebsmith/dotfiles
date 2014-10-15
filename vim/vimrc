@@ -176,7 +176,11 @@ nnoremap <Leader>z :LiteDFMToggle<CR>:silent !tmux set status > /dev/null 2>&1<C
 nnoremap <leader>e :LustyFilesystemExplorer<cr>
 nnoremap <leader>eh :LustyFilesystemExplorerFromHere<cr>
 nnoremap <leader>b :LustyBufferExplorer<cr>
-nnoremap <leader>g :LustyBufferGrep<cr>
+nnoremap <leader>/ :LustyBufferGrep<cr>
+
+" Ack.vim bindings
+nnoremap <leader>a :tab split<CR>:Ack ""<Left>
+nnoremap <leader>* :tab split<CR>:Ack <C-r><C-w><CR>
 
 " Misc leaders for save/load/sourcing
 nnoremap <leader>i :BundleInstall<cr>
@@ -217,15 +221,16 @@ nnoremap <NL> :w!<CR>:Require<CR>
 
     " General
     Bundle 'gmarik/vundle'
-    Bundle 'sjbach/lusty'
-    Bundle 'scrooloose/syntastic'
+    Bundle 'tpope/vim-repeat'
+    Bundle 'tpope/vim-surround'
     Bundle 'Valloric/YouCompleteMe'
+    Bundle 'scrooloose/syntastic'
+    Bundle 'sjbach/lusty'
+    Bundle 'mileszs/ack.vim'
     Bundle 'szw/vim-tags'
     Bundle 'tpope/vim-dispatch'
     Bundle 'bilalq/lite-dfm'
     Bundle 'calebsmith/vim-lambdify'
-    Bundle 'tpope/vim-repeat'
-    Bundle 'tpope/vim-surround'
     " Python
     Bundle 'pfdevilliers/Pretty-Vim-Python'
     " Android
@@ -288,6 +293,8 @@ let g:EclimCompletionMethod = 'omnifunc'
 " vim clojure
 let g:vimclojure#HighlightBuiltins = 1
 let g:vimclojure#ParenRainbow = 1
+
+let g:sexp_enable_insert_mode_mappings = 0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Custom Functions
