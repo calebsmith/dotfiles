@@ -1,11 +1,11 @@
-# vimrc
--------
+# dotfiles
+----------
 
 This is where I keep my configuration files. To use, copy all dotfiles to the
-home directory use the following commands:
+home directory using the following commands:
 
 ```
-git clone git://github.com/calebsmith/vimrc
+git clone git://github.com/calebsmith/dotfiles
 make
 ```
 
