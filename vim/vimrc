@@ -13,8 +13,8 @@ set scrolloff=3
 set laststatus=2
 set title
 set ruler
-set number
 set relativenumber
+set number
 set hidden
 
 
@@ -160,10 +160,10 @@ vnoremap <leader>y "+y
 nnoremap <leader>p :set paste<cr>"+p :set nopaste<cr>
 
 " Leaders for vim-dispatch
-nnoremap <leader>m :Make<cr>
-nnoremap <leader>M :Make!<cr>
-nnoremap <leader>d :Dispatch<cr>
-nnoremap <leader>D :Dispatch!<cr>
+nnoremap <leader>m :Make!<cr>
+nnoremap <leader>M :Make<cr>
+nnoremap <leader>d :Dispatch!<cr>
+nnoremap <leader>D :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
 
 " Leaders for ctags
@@ -189,6 +189,7 @@ nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksess
 nnoremap <leader>l :exe "source .session.vim"<cr>
 nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
+nnoremap <leader>R :Make!<cr>:source ~/.vimrc<cr>
 nnoremap <leader>q :bufdo q<cr>
 
 " For vimdiff
