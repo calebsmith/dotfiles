@@ -135,12 +135,17 @@ cmap w!! w !sudo tee % >/dev/null
 " Make enter save
 nnoremap <CR> :w! <CR>
 
+" Make - Explore
+map - :Explore<CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Define leader key
 let mapleader = ","
+nmap <Space> ,
+
 
 " Define leader commands:
 
@@ -188,8 +193,8 @@ nnoremap <leader>i :BundleInstall<cr>
 nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksession! .session.vim"<cr>:w!<cr>
 nnoremap <leader>l :exe "source .session.vim"<cr>
 nnoremap <leader>L :exe "source ~/.vim/.sessions/latest.vim"<cr>
-nnoremap <leader>r :source ~/.vimrc<cr>
-nnoremap <leader>R :Make!<cr>:source ~/.vimrc<cr>
+nnoremap <leader>r :Make!<cr>:source ~/.vimrc<cr>
+nnoremap <leader>R :Make!<cr>:source ~/.vimrc<cr>:BundleInstall<cr>:q<cr>
 nnoremap <leader>q :bufdo q<cr>
 
 " For vimdiff
@@ -236,10 +241,9 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Bundle 'godlygeek/tabular'
     Bundle 'plasticboy/vim-markdown'
     Bundle 'reedes/vim-pencil'
+    Bundle 'sjl/tslime.vim'
     " Python
     Bundle 'pfdevilliers/Pretty-Vim-Python'
-    " Android
-    Bundle 'hsanson/vim-android'
     " JavaScript
     Bundle 'pangloss/vim-javascript'
     " Lisps
@@ -267,7 +271,6 @@ nnoremap <NL> :w!<CR>:Require<CR>
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_c_checkers = ['splint']
 let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_java_checkers = ['jlint']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_always_populate_loc_list = 1
 
@@ -283,10 +286,6 @@ let g:vim_tags_use_vim_dispatch = 1
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
 
-if android#isAndroidProject()
-    autocmd FileType java let b:dispatch = 'source ~/bin/android_helpers.sh; android_go'
-endif
-
 " LiteDFM Configuration
 let g:lite_dfm_normal_bg_cterm = 234
 let g:lite_dfm_left_offset = 15
@@ -297,10 +296,6 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
 augroup END
-
-" vim-android Configuration
-let g:android_sdk_path = '/opt/android-sdk'
-let g:EclimCompletionMethod = 'omnifunc'
 
 " vim clojure
 let g:vimclojure#HighlightBuiltins = 1
