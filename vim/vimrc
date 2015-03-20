@@ -172,7 +172,7 @@ nnoremap <leader>D :Dispatch<cr>
 nnoremap <leader>o :Copen<cr>
 
 " Leaders for ctags
-nnoremap <leader>tg :TagsGenerate!<cr>
+nnoremap <leader>g :TagsGenerate!<cr>
 nnoremap <leader>j :tjump<space>
 
 " Enable Zen Mode
@@ -227,34 +227,34 @@ nnoremap <NL> :w!<CR>:Require<CR>
     " ~~~~~~~~~~~~~~~~~
 
     " General
-    Bundle 'gmarik/vundle'
-    Bundle 'tpope/vim-repeat'
-    Bundle 'tpope/vim-surround'
-    Bundle 'Valloric/YouCompleteMe'
-    Bundle 'scrooloose/syntastic'
-    Bundle 'sjbach/lusty'
-    Bundle 'mileszs/ack.vim'
-    Bundle 'szw/vim-tags'
-    Bundle 'tpope/vim-dispatch'
-    Bundle 'bilalq/lite-dfm'
-    Bundle 'calebsmith/vim-lambdify'
-    Bundle 'godlygeek/tabular'
-    Bundle 'plasticboy/vim-markdown'
-    Bundle 'reedes/vim-pencil'
-    Bundle 'sjl/tslime.vim'
+    Plugin 'gmarik/vundle'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-surround'
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'sjbach/lusty'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'szw/vim-tags'
+    Plugin 'tpope/vim-dispatch'
+    Plugin 'bilalq/lite-dfm'
+    Plugin 'calebsmith/vim-lambdify'
+    Plugin 'godlygeek/tabular'
+    Plugin 'plasticboy/vim-markdown'
+    Plugin 'reedes/vim-pencil'
+    Plugin 'benmills/vimux'
     " Python
-    Bundle 'pfdevilliers/Pretty-Vim-Python'
+    Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
-    Bundle 'pangloss/vim-javascript'
+    Plugin 'pangloss/vim-javascript'
     " Lisps
-    Bundle 'amdt/vim-niji'
-    Bundle 'guns/vim-sexp'
-    Bundle 'tpope/vim-sexp-mappings-for-regular-people'
+    Plugin 'amdt/vim-niji'
+    Plugin 'guns/vim-sexp'
+    Plugin 'tpope/vim-sexp-mappings-for-regular-people'
     " Clojure
-    Bundle 'vim-scripts/VimClojure'
-    Bundle 'tpope/vim-leiningen'
-    Bundle 'tpope/vim-projectionist'
-    Bundle 'tpope/vim-fireplace'
+    Plugin 'vim-scripts/VimClojure'
+    Plugin 'tpope/vim-leiningen'
+    Plugin 'tpope/vim-projectionist'
+    Plugin 'tpope/vim-fireplace'
 
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
@@ -285,6 +285,22 @@ let g:vim_tags_use_vim_dispatch = 1
 
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
+
+" Vimux Configuration
+" -------------------
+" Prompt for a command to run
+nnoremap <Leader>vp :VimuxPromptCommand<CR>
+" Run last command executed by RunVimTmuxCommand
+nnoremap <Leader>vl :call _RunLast()<CR>
+" Close all other tmux panes in current window
+nnoremap <Leader>vq :VimuxCloseRunner<CR>
+" Interrupt any command running in the runner pane
+nnoremap <Leader>vi :VimuxInterruptRunner<CR>
+" Shortcuts for eval current highlight or paragraph
+vnoremap <Leader>t "ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
+nnoremap <Leader>t vip"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
+nnoremap <Leader>T :VimuxPromptCommand<CR>
+
 
 " LiteDFM Configuration
 let g:lite_dfm_normal_bg_cterm = 234
@@ -357,3 +373,7 @@ if !exists("g:show_column_toggle")
     let g:show_column_toggle = 0
     call ToggleColorColumn()
 endif
+
+
+" Set Lisp indentation using racket script
+autocmd filetype lisp,scheme,art setlocal equalprg=scmindent.rkt
