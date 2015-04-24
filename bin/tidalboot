@@ -1,0 +1,38 @@
+#!/bin/bash
+
+DEFAULT_PATH=~
+DEFAULT_FILE=foo.tidal
+DIRT_PATH=~/dirt
+DIRT_OPTIONS=--no-dirty-compressor -c 4
+
+
+# Get current directory (of script)
+# http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+SESSION=tidal
+
+# check if tmux session "tidal" is running, attach only
+# else, create new session, split windows and run processes
+
+tmux has-session -t $SESSION 2>/dev/null
+
+
+if [ "$?" -eq 1 ] ; then
+  tmux rename-session $SESSION
+fi
+
+tmux \
+    select-pane -t 1 \; \
+    split-window -h -t $SESSION   \; \
+    send-keys -t 1 "ghci -XOverloadedStrings" C-m   \; \
+    send-keys -t 2 "cd $DIRT_PATH" C-m "./dirt $DIRT_OPTIONS" C-m   \; \
+    load-buffer $DIR/BootTidal.hss   \; \
+    paste-buffer -d -t 1  \; \
+    select-pane -t 0

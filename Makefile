@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-.PHONY: all tmux git vim indent xmonad
+.PHONY: all bin tmux git vim indent xmonad
 
 all:
 	make tmux
@@ -8,6 +8,15 @@ all:
 	make vim
 	make indent
 	make xmonad
+
+bin:
+	@(source ./safe_copy.sh; \
+	safe_copy bin/tidalboot ~/bin/tidalboot && \
+	safe_copy bin/BootTidal.hss ~/bin/BootTidal.hss && \
+	safe_copy bin/sicp-racket ~/bin/sicp-racket && \
+	safe_copy bin/scmindent.rkt ~/bin/scmindent.rkt && \
+	safe_copy bin/android_helpers.sh ~/bin/android_helpers.sh)
+
 
 tmux:
 	@(source ./safe_copy.sh; \
