@@ -295,6 +295,7 @@ let g:vim_tags_use_vim_dispatch = 1
 autocmd FileType erlang let b:dispatch = 'erl -make'
 
 " NERDTree Configuration
+let NERDTreeShowHidden=1
 " Open on start if no file chosen
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
