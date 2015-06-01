@@ -3,6 +3,7 @@ SHELL = /bin/bash
 .PHONY: all bin tmux git vim indent xmonad
 
 all:
+	make bin
 	make tmux
 	make git
 	make vim

@@ -50,6 +50,9 @@ set noswapfile
 set history=1000
 set undolevels=1000
 
+" enable mouse, mainly for NERDTree
+set mouse=a
+
 " Use filetype in lieu of compatible if available
 if has("autocmd")
     filetype on
@@ -188,6 +191,9 @@ nnoremap <leader>/ :LustyBufferGrep<cr>
 nnoremap <leader>a :tab split<CR>:Ack ""<Left>
 nnoremap <leader>* :tab split<CR>:Ack <C-r><C-w><CR>
 
+" NERDTree bindings
+map <C-n> :NERDTreeToggle<CR>
+
 " Misc leaders for save/load/sourcing
 nnoremap <leader>i :BundleInstall<cr>
 nnoremap <leader>s :exe "mksession! ~/.vim/.sessions/latest.vim"<cr>:exe "mksession! .session.vim"<cr>:w!<cr>
@@ -242,6 +248,7 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'plasticboy/vim-markdown'
     Plugin 'reedes/vim-pencil'
     Plugin 'benmills/vimux'
+    Plugin 'scrooloose/nerdtree'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
@@ -286,6 +293,57 @@ let g:vim_tags_use_vim_dispatch = 1
 
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'
+
+" NERDTree Configuration
+let NERDTreeShowHidden=1
+" Open on start if no file chosen
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('mkd', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('sh', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('less', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('py', 'Magenta', 'none', '#ff00ff', '#151515')
+call NERDTreeHighlightFile('scm', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('rkt', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('clj', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('erl', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('c', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('cpp', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('h', 'cyan', 'none', '#00ff00', '#151515')
+call NERDTreeHighlightFile('hpp', 'cyan', 'none', '#00ff00', '#151515')
+
+" Python Mode Config
+" -------------------
+" Disable rope - use YCM
+let g:pymode_rope = 0
+"Disable Linting - use syntastic
+let g:pymode_lint = 0
+" Support virtualenv
+let g:pymode_virtualenv = 1
+" Disable set breakpoints
+let g:pymode_breakpoint = 0
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+" Don't autofold code
+let g:pymode_folding = 0
 
 " Vimux Configuration
 " -------------------
