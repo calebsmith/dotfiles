@@ -254,7 +254,7 @@ nnoremap <NL> :w!<CR>:Require<CR>
     " JavaScript
     Plugin 'pangloss/vim-javascript'
     " Lisps
-    Plugin 'amdt/vim-niji'
+    Plugin 'spinningarrow/vim-niji'
     Plugin 'guns/vim-sexp'
     Plugin 'tpope/vim-sexp-mappings-for-regular-people'
     " Clojure
