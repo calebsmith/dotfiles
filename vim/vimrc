@@ -303,8 +303,8 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+    exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
 call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
@@ -323,8 +323,7 @@ call NERDTreeHighlightFile('scm', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('rkt', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('clj', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('erl', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('c', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('cpp', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('cpp', 'blue', 'none', '#3366FF', '#151515')
 call NERDTreeHighlightFile('h', 'cyan', 'none', '#00ff00', '#151515')
 call NERDTreeHighlightFile('hpp', 'cyan', 'none', '#00ff00', '#151515')
 
