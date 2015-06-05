@@ -21,7 +21,7 @@ set hidden
 " This is what files look like
 set encoding=utf8
 set ffs=unix,dos,mac
-"set wildignore=*.pyc,*.pyo,*.o,*.so,*.out
+set wildignore=*.pyc,*.pyo,*.o,*.so,*.out,*.git,*.hg,*.svn,*.exe,*.zip,*.tar
 
 " From whence you came, you shall remain, until you set, the path again
 set path=$PWD/**
@@ -295,6 +295,7 @@ let g:vim_tags_use_vim_dispatch = 1
 autocmd FileType erlang let b:dispatch = 'erl -make'
 
 " NERDTree Configuration
+let NERDTreeRespectWildIgnore=1
 let NERDTreeShowHidden=1
 " Open on start if no file chosen
 autocmd StdinReadPre * let s:std_in=1
