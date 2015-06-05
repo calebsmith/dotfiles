@@ -138,9 +138,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Make enter save
 nnoremap <CR> :w! <CR>
 
-" Make - Explore
-map - :Explore<CR>
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Leader Configuration
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,8 +161,8 @@ nnoremap <leader>F :call ToggleFold()<cr>
 nnoremap <leader>f za
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>y "+y
-vnoremap <leader>y "+y
 nnoremap <leader>p :set paste<cr>"+p :set nopaste<cr>
+
 
 " Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
@@ -249,6 +246,7 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'reedes/vim-pencil'
     Plugin 'benmills/vimux'
     Plugin 'scrooloose/nerdtree'
+    Plugin 'tpope/vim-fugitive'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
