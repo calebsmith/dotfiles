@@ -4,3 +4,4 @@ tags
 .exrc
 .vimrc
 *__pycache__
+.env
