@@ -22,7 +22,7 @@ set statusline=%t%y-%{fugitive#statusline()}%m
 " This is what files look like
 set encoding=utf8
 set ffs=unix,dos,mac
-set wildignore=*.pyc,*.pyo,*.o,*.so,*.out,*.git,*.hg,*.svn,*.exe,*.zip,*.tar
+set wildignore=*.pyc,*.pyo,*.o,*.so,*.out,*.git,*.hg,*.svn,*.exe,*.zip,*.tar,.tox
 
 " From whence you came, you shall remain, until you set, the path again
 set path=$PWD/**
