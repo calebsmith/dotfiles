@@ -155,14 +155,15 @@ nnoremap <CR> :w! <CR>
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 " Define leader key
-let mapleader = ","
-nmap <Space> ,
-
+let mapleader = " "
 
 " Define leader commands:
 
 " See list of mappings
 nnoremap <leader>? :map<cr>
+
+" Clear highlight and redraw
+nnoremap <s-c-l> :nohl<cr><c-l>
 
 " Leaders for custom functions
 nnoremap <leader>w :call StripTrailingWhitespaces()<cr>
