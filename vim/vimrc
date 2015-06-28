@@ -109,6 +109,10 @@ if has('persistent_undo')
     set undofile
 endif
 
+" Use system clipboard as default register for yank/paste
+set clipboard^=unnamed  " use the clipboards of vim and win
+set go+=a               " Visual selection automatically copied to the clipboard
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Key Mappings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,10 +176,6 @@ nnoremap <leader>F :call ToggleFold()<cr>
 
 " Leaders for custom shortcuts
 nnoremap <leader>f za
-nnoremap <leader><space> :noh<cr>
-nnoremap <leader>y "+y
-nnoremap <leader>p :set paste<cr>"+p :set nopaste<cr>
-
 
 " Leaders for vim-dispatch
 nnoremap <leader>m :Make!<cr>
@@ -378,13 +378,6 @@ nnoremap <Leader><Space> vip"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("
 " LiteDFM Configuration
 let g:lite_dfm_normal_bg_cterm = 234
 let g:lite_dfm_left_offset = 15
-
-" vim-pencil
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
 
 " vim clojure
 let g:vimclojure#HighlightBuiltins = 1
