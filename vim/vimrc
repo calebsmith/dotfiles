@@ -188,9 +188,6 @@ nnoremap <leader>o :Copen<cr>
 nnoremap <leader>g :TagsGenerate!<cr>
 nnoremap <leader>j :tjump<space>
 
-" Enable Zen Mode
-nnoremap <Leader>z :LiteDFMToggle<CR>:silent !tmux set status > /dev/null 2>&1<CR>:redraw!<CR>
-
 " Lusty Explorer bindings
 nnoremap <leader>e :LustyFilesystemExplorer<cr>
 nnoremap <leader>eh :LustyFilesystemExplorerFromHere<cr>
@@ -221,6 +218,7 @@ if &diff
     set statusline=%-10.3n  "buffer number
 endif
 
+" Make enter save. For clojure, live-reload associated process
 nnoremap <NL> :w!<CR>:Require<CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -252,7 +250,6 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'mileszs/ack.vim'
     Plugin 'szw/vim-tags'
     Plugin 'tpope/vim-dispatch'
-    Plugin 'bilalq/lite-dfm'
     Plugin 'calebsmith/vim-lambdify'
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
