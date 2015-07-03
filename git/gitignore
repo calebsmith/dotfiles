@@ -1,7 +1,10 @@
 tags
 .tags
+.DS_Store
 .*.vim
 .exrc
 .vimrc
 *__pycache__
 .env
+.~lock.*
+*node_modules/
