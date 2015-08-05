@@ -160,6 +160,7 @@ nnoremap <CR> :w! <CR>
 
 " Define leader key
 let mapleader = " "
+let maplocalleader = ","
 
 " Define leader commands:
 
@@ -193,6 +194,9 @@ nnoremap <leader>e :LustyFilesystemExplorer<cr>
 nnoremap <leader>eh :LustyFilesystemExplorerFromHere<cr>
 nnoremap <leader>b :LustyBufferExplorer<cr>
 nnoremap <leader>/ :LustyBufferGrep<cr>
+
+" Gundo binding
+nnoremap <leader>u :GundoToggle<CR>
 
 " Ack.vim bindings
 nnoremap <leader>a :tab split<CR>:Ack ""<Left>
@@ -258,6 +262,7 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'benmills/vimux'
     Plugin 'scrooloose/nerdtree'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'sjl/gundo.vim'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
@@ -367,13 +372,10 @@ nnoremap <Leader>vl :call _RunLast()<CR>
 nnoremap <Leader>vq :VimuxCloseRunner<CR>
 " Interrupt any command running in the runner pane
 nnoremap <Leader>vi :VimuxInterruptRunner<CR>
-" Shortcuts for eval current highlight or paragraph
-vnoremap <Leader>t "ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
-nnoremap <Leader>t vip"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
-nnoremap <Leader>T :VimuxPromptCommand<CR>
 
 vnoremap <Leader><Space> "ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
 nnoremap <Leader><Space> vip"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
+nnoremap <LocalLeader><Space> ggVG"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>''
 
 
 " LiteDFM Configuration
