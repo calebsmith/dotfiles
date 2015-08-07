@@ -282,7 +282,6 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'guns/vim-sexp'
     Plugin 'tpope/vim-sexp-mappings-for-regular-people'
     " Clojure
-    Plugin 'vim-scripts/VimClojure'
     Plugin 'guns/vim-clojure-static'
     Plugin 'tpope/vim-leiningen'
     Plugin 'tpope/vim-projectionist'
