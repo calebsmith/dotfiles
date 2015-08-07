@@ -472,3 +472,4 @@ endfunction
 
 inoremap <expr><s-tab> pumvisible()?"\<c-p>":"\<c-d>"
 autocmd FileType clojure :autocmd VimEnter * inoremap <expr><tab> InsertTabWrapper()
+autocmd FileType clojure :autocmd BufEnter * inoremap <expr><tab> InsertTabWrapper()
