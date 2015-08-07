@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-.PHONY: all bin tmux git vim indent xmonad
+.PHONY: all bin tmux git vim indent xmonad lein
 
 all:
 	make bin
@@ -9,6 +9,7 @@ all:
 	make vim
 	make indent
 	make xmonad
+	make lein
 
 bin:
 	@(source ./safe_copy.sh; \
@@ -43,3 +44,7 @@ xmonad:
 	[ $$safe_copy_result -ne 0 ] || xmonad --recompile; \
 	safe_copy xmonad/xmonad.hs ~/.xmonad/xmonad.hs; \
 	[ $$safe_copy_result -ne 0 ] || xmonad --recompile)
+
+lein:
+	@(source ./safe_copy.sh; \
+	safe_copy lein/profiles.clj ~/.lein/profiles.clj)
