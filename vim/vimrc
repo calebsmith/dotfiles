@@ -392,10 +392,7 @@ nnoremap <LocalLeader><Space> ggVG"ry :call VimuxSendText(@r)<CR>:call VimuxSend
 let g:lite_dfm_normal_bg_cterm = 234
 let g:lite_dfm_left_offset = 15
 
-" vim clojure
-let g:vimclojure#HighlightBuiltins = 1
-let g:vimclojure#ParenRainbow = 1
-
+" vim sexp
 let g:sexp_enable_insert_mode_mappings = 0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
