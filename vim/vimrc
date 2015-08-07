@@ -113,6 +113,16 @@ endif
 set clipboard^=unnamed  " use the clipboards of vim and win
 set go+=a               " Visual selection automatically copied to the clipboard
 
+
+" Omnicompletion improvements
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" improve omnicomplete popup nav
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Key Mappings
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -303,6 +313,7 @@ let g:syntastic_sh_checkers = ['shellcheck']
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_filetype_blacklist = {'clojure': 1}
 
 " vim-tags Configuration
 let g:vim_tags_use_ycm = 1
@@ -446,3 +457,19 @@ endif
 
 " Set Lisp indentation using racket script
 autocmd filetype lisp,scheme,art setlocal equalprg=scmindent.rkt
+
+" Omnicomplete tab wrapper for clojure where YCM is disabled
+
+function! InsertTabWrapper()
+  if pumvisible()
+    return "\<c-n>"
+  endif
+  if strpart(getline('.'), 0, col('.') - 1) =~ '.*(\S*$'
+    return "\<c-x>\<c-o>"
+  else
+    return "\<tab>"
+  endif
+endfunction
+
+inoremap <expr><s-tab> pumvisible()?"\<c-p>":"\<c-d>"
+autocmd FileType clojure :autocmd VimEnter * inoremap <expr><tab> InsertTabWrapper()
