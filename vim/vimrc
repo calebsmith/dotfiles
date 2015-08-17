@@ -273,6 +273,7 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'scrooloose/nerdtree'
     Plugin 'tpope/vim-fugitive'
     Plugin 'sjl/gundo.vim'
+    Plugin 'editorconfig/editorconfig-vim'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
