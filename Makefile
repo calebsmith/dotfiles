@@ -13,6 +13,7 @@ all:
 
 bin:
 	@(source ./safe_copy.sh; \
+	safe_copy bin/tmuxinator.bash ~/bin/tmuxinator.bash && \
 	safe_copy bin/tidalboot ~/bin/tidalboot && \
 	safe_copy bin/BootTidal.hss ~/bin/BootTidal.hss && \
 	safe_copy bin/sicp-racket ~/bin/sicp-racket && \
