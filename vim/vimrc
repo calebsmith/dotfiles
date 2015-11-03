@@ -291,6 +291,8 @@ nnoremap <F12> :%Eval<CR>:ClojureHighlightReferences<CR>
     Plugin 'tpope/vim-classpath'
     Plugin 'tpope/vim-fireplace'
     Plugin 'guns/vim-clojure-highlight'
+    " Ansible
+    Plugin 'pearofducks/ansible-vim'
 
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
