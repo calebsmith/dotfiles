@@ -235,6 +235,8 @@ endif
 " Make enter save. For clojure, live-reload associated process
 nnoremap <NL> :w!<CR>:Require<CR>
 
+nnoremap <F12> :%Eval<CR>:ClojureHighlightReferences<CR>
+
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -284,9 +286,11 @@ nnoremap <NL> :w!<CR>:Require<CR>
     Plugin 'tpope/vim-sexp-mappings-for-regular-people'
     " Clojure
     Plugin 'guns/vim-clojure-static'
-    Plugin 'tpope/vim-leiningen'
     Plugin 'tpope/vim-projectionist'
+    Plugin 'tpope/vim-leiningen'
+    Plugin 'tpope/vim-classpath'
     Plugin 'tpope/vim-fireplace'
+    Plugin 'guns/vim-clojure-highlight'
 
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
