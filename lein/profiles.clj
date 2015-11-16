@@ -1,11 +1,13 @@
-{:user {:plugins [[cider/cider-nrepl "0.9.0-SNAPSHOT"]
-                  [refactor-nrepl "0.3.0-SNAPSHOT"]
-                  [mvxcvi/whidbey "1.0.0"]
-                  [lein-kibit "0.1.2"]
-                  [lein-bin "0.3.5"]
+{:user {:plugins [[cider/cider-nrepl "0.10.0-SNAPSHOT"]
+                  [refactor-nrepl "1.2.0-SNAPSHOT"]
+                  [mvxcvi/whidbey "1.0.0" :exclusions [org.clojure/clojure]]
+                  [lein-kibit "0.1.2" :exclusions [org.clojure/clojure]]
                   [lein-pprint "1.1.1"]
-                  [lein-deps-tree "0.1.2"]
-                  [debugger "0.1.7"]
-                  [jonase/eastwood "0.2.1"]]}
+                  [lein-deps-tree "0.1.2" :exclusions [org.codehaus.plexus/plexus-utils]]
+                  [lein-bin "0.3.5" :exclusions [org.clojure/clojure]]
+                  [debugger "0.1.7" :exclusions [org.clojure/clojure]]
+                  [jonase/eastwood "0.2.1" :exclusions [org.clojure/clojure]]
+                  [jonase/kibit "0.1.2" :exclusions [org.clojure/clojure]]]}
  :dependencies [[alembic "0.3.2"]
-                [org.clojure/tools.nrepl "0.2.7"]]}
+                [[acyclic/squiggly-clojure "0.1.3-SNAPSHOT"]
+                 ^:replace [org.clojure/tools.nrepl "0.2.10"]]]}
