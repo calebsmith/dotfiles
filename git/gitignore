@@ -4,6 +4,7 @@ tags
 .*.vim
 .exrc
 .vimrc
+.projectile
 *__pycache__
 .env
 .~lock.*
