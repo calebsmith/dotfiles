@@ -143,7 +143,7 @@ vnoremap <right> <nop>
 
 " Put escape on the home row
 inoremap jk <esc>
-inoremap kj <esc>
+inoremap fd <esc>
 
 " Don't skip wrapped lines when navigating
 nnoremap j gj
