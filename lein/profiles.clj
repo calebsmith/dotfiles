@@ -2,11 +2,9 @@
                                          :username ""
                                          :password ""}}
         :plugins [[venantius/ultra "0.4.1"]
-                  [lein-deps-tree "0.1.2" :exclusions [org.codehaus.plexus/plexus-utils]]
                   [com.jakemccrary/lein-test-refresh "0.14.0"]
                   [debugger "0.1.7" :exclusions [org.clojure/clojure]]
-                  [lein-kibit "0.1.2" :exclusions [org.clojure/clojure]]
-                  [lein-bin "0.3.5" :exclusions [org.clojure/clojure]]
+                  [lein-ancient "0.6.8"]
                   [jonase/eastwood "0.2.1" :exclusions [org.clojure/clojure]]
                   [jonase/kibit "0.1.2" :exclusions [org.clojure/clojure]]]
         :dependencies [[alembic "0.3.2"]
