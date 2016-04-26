@@ -5,6 +5,8 @@
                   [com.jakemccrary/lein-test-refresh "0.14.0"]
                   [debugger "0.1.7" :exclusions [org.clojure/clojure]]
                   [lein-ancient "0.6.8"]
+                  [lein-typed "0.3.5"]
+                  [org.clojure/core.typed "0.3.23"]
                   [jonase/eastwood "0.2.1" :exclusions [org.clojure/clojure]]
                   [jonase/kibit "0.1.2" :exclusions [org.clojure/clojure]]]
         :dependencies [[alembic "0.3.2"]

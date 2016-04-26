@@ -37,10 +37,9 @@
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(
-                                      flycheck-clojure
-                                      flycheck-pos-tip
-                                      )
+   dotspacemacs-additional-packages '(flycheck-clojure
+                                      flycheck-tip
+                                      cider-eval-sexp-fu)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(org-plus-contrib)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -163,8 +162,20 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
-  (setq powerline-default-separator 'butt)
-  (setq clojure-enable-fancify-symbols t)
+  (use-package flycheck
+    :config
+    (progn
+      (global-flycheck-mode 1)
+      (flycheck-clojure-setup)
+      (setq-default
+       flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+       flycheck-emacs-lisp-load-path 'inherit
+       flycheck-emacs-lisp-initialize-packages t)))
+
+  (use-package flycheck-tip
+    :config
+    (flycheck-tip-use-timer 'verbose))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -191,6 +202,40 @@ layers configuration."
  )
 
 (defun dotspacemacs/user-config ()
-  (define-key evil-normal-state-map (kbd "<CR>") 'spacemacs/write-file)
   (set-background-color "black")
-  (aggressive-indent-global-mode))
+  (aggressive-indent-global-mode)
+  (setq clojure-enable-fancify-symbols t)
+  (setq powerline-default-separator 'butt)
+
+
+  ;; Make copy/paste use clipboard
+  (defun copy-from-osx ()
+    (shell-command-to-string "pbpaste"))
+  (defun paste-to-osx (text &optional push)
+    (let ((process-connection-type nil))
+      (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+        (process-send-string proc text)
+        (process-send-eof proc))))
+  (setq interprogram-cut-function 'paste-to-osx)
+  (setq interprogram-paste-function 'copy-from-osx)
+
+  ;; Make mouse scroll work
+  (global-set-key [mouse-4] 'scroll-down-line)
+  (global-set-key [mouse-5] 'scroll-up-line)
+
+  ;; FIXME, doesn't seem to work
+  (define-key evil-normal-state-map (kbd "<CR>") 'spacemacs/write-file)
+
+  ;; make wrapping friendly for [ and {
+  (with-eval-after-load "evil-lisp-state"
+    ;; undef SPC k w so we can generalize it
+    (evil-leader/set-key "kw" nil)
+    ;; wrap using SPC k w ([{
+    (evil-leader/set-key "kw("
+      (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "(")))
+    (evil-leader/set-key "kw["
+      (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "[")))
+    (evil-leader/set-key "kw{"
+      (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "{"))))
+
+  )

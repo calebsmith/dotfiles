@@ -316,7 +316,7 @@ let g:ycm_filetype_blacklist = {'clojure': 1}
 
 " vim-tags Configuration
 let g:vim_tags_use_ycm = 1
-let g:vim_tags_use_vim_dispatch = 1
+let g:vim_tags_use_vim_dispatch = 0
 
 " Dispatch Configuration
 autocmd FileType erlang let b:dispatch = 'erl -make'

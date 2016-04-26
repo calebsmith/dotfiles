@@ -16,4 +16,3 @@ programs only.
 
 Upon running vim the first time, vundle will be installed, which will install
 the vim bundles defined in .vimrc in turn.
-
