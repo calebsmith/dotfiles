@@ -225,10 +225,6 @@ layers configuration."
   (global-set-key [mouse-4] 'scroll-down-line)
   (global-set-key [mouse-5] 'scroll-up-line)
 
-
-  ;; FIXME, doesn't seem to work
-  (define-key evil-normal-state-map (kbd "<CR>") 'spacemacs/write-file)
-
   ;; make wrapping friendly for [ and {
   (with-eval-after-load "evil-lisp-state"
     ;; undef SPC k w so we can generalize it
@@ -241,32 +237,9 @@ layers configuration."
     (evil-leader/set-key "kw{"
       (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "{"))))
 
-  (defun cider-figwheel-repl ()
-    (interactive)
-    (with-current-buffer (cider-current-repl-buffer)
-      (goto-char (point-max))
-      (insert "(require 'figwheel-sidecar.repl-api)
-             (figwheel-sidecar.repl-api/start-figwheel!) ; idempotent
-             (figwheel-sidecar.repl-api/cljs-repl)")
-      (cider-repl-return)))
-
-  (defun cider-exit-clojurescript ()
-    (interactive)
-    (with-current-buffer (cider-current-repl-buffer)
-      (goto-char (point-max))
-      (insert ":cljs/quit\n")
-      (cider-repl-return)))
-
-  (defun toggle-cider-repl ()
-    (interactive)
-    (if (get 'cider-toggle-repl-state 'state)
-        (progn
-          (cider-figwheel-repl)
-          (put 'cider-toggle-repl-state 'state nil))
-      (progn
-        (cider-exit-clojurescript)
-        (put 'cider-toggle-repl-state 'state t))))
-
-  (evil-leader/set-key "tz" #'toggle-cider-repl)
+  (setq cider-cljs-lein-repl
+        "(do (require 'figwheel-sidecar.repl-api)
+            (figwheel-sidecar.repl-api/start-figwheel!)
+            (figwheel-sidecar.repl-api/cljs-repl))")
 
   )
