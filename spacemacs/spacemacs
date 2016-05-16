@@ -39,6 +39,7 @@
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(flycheck-clojure
                                       flycheck-tip
+                                      typed-clojure-mode
                                       cider-eval-sexp-fu)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(org-plus-contrib)
@@ -207,6 +208,7 @@ layers configuration."
   (setq clojure-enable-fancify-symbols t)
   (setq powerline-default-separator 'butt)
 
+  (add-hook 'clojure-mode-hook 'typed-clojure-mode)
 
   ;; Make copy/paste use clipboard
   (defun copy-from-osx ()
@@ -223,6 +225,7 @@ layers configuration."
   (global-set-key [mouse-4] 'scroll-down-line)
   (global-set-key [mouse-5] 'scroll-up-line)
 
+
   ;; FIXME, doesn't seem to work
   (define-key evil-normal-state-map (kbd "<CR>") 'spacemacs/write-file)
 
@@ -237,5 +240,33 @@ layers configuration."
       (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "[")))
     (evil-leader/set-key "kw{"
       (lambda (&optional arg) (interactive "P") (sp-wrap-with-pair "{"))))
+
+  (defun cider-figwheel-repl ()
+    (interactive)
+    (with-current-buffer (cider-current-repl-buffer)
+      (goto-char (point-max))
+      (insert "(require 'figwheel-sidecar.repl-api)
+             (figwheel-sidecar.repl-api/start-figwheel!) ; idempotent
+             (figwheel-sidecar.repl-api/cljs-repl)")
+      (cider-repl-return)))
+
+  (defun cider-exit-clojurescript ()
+    (interactive)
+    (with-current-buffer (cider-current-repl-buffer)
+      (goto-char (point-max))
+      (insert ":cljs/quit\n")
+      (cider-repl-return)))
+
+  (defun toggle-cider-repl ()
+    (interactive)
+    (if (get 'cider-toggle-repl-state 'state)
+        (progn
+          (cider-figwheel-repl)
+          (put 'cider-toggle-repl-state 'state nil))
+      (progn
+        (cider-exit-clojurescript)
+        (put 'cider-toggle-repl-state 'state t))))
+
+  (evil-leader/set-key "tz" #'toggle-cider-repl)
 
   )
