@@ -9,3 +9,4 @@ tags
 .env
 .~lock.*
 *node_modules/
+.#*
