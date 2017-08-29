@@ -8,6 +8,8 @@
 [core]
     excludesfile = ~/.gitignore
     editor = vim
+    autocrlf = input
+    eol = lf
 
 [push]
     default = current
