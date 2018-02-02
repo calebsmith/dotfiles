@@ -19,7 +19,9 @@ bin:
 	safe_copy bin/BootTidal.hss ~/bin/BootTidal.hss && \
 	safe_copy bin/sicp-racket ~/bin/sicp-racket && \
 	safe_copy bin/scmindent.rkt ~/bin/scmindent.rkt && \
-	safe_copy bin/android_helpers.sh ~/bin/android_helpers.sh)
+	safe_copy bin/android_helpers.sh ~/bin/android_helpers.sh && \
+	safe_copy bin/npm-completion.sh ~/bin/npm-completion.sh && \
+	safe_copy bin/git-completion.sh ~/bin/git-completion.sh)
 
 
 tmux:
