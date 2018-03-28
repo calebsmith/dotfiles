@@ -110,7 +110,7 @@ if has('persistent_undo')
 endif
 
 " Use system clipboard as default register for yank/paste
-set clipboard^=unnamed  " use the clipboards of vim and win
+set clipboard=unnamedplus  " use the clipboards of vim and win
 set go+=a               " Visual selection automatically copied to the clipboard
 
 
