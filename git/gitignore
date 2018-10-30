@@ -2,6 +2,7 @@ tags
 .tags
 .DS_Store
 .*.vim
+.vscode/
 .exrc
 .vimrc
 .projectile
