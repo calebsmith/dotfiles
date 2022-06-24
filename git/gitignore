@@ -10,3 +10,8 @@ tags
 .~lock.*
 *node_modules/
 .#*
+*.lsp
+*.clj-kondo
+/.lein-*
+/.nrepl-port
+/.shadow-cljs/
