@@ -17,8 +17,6 @@ set relativenumber
 set number
 set hidden
 
-set statusline=%t%y-%{fugitive#statusline()}%m
-
 " This is what files look like
 set encoding=utf8
 set ffs=unix,dos,mac
@@ -143,14 +141,13 @@ vnoremap <right> <nop>
 
 " Put escape on the home row
 inoremap jk <esc>
+inoremap kj <esc>
 inoremap fd <esc>
+inoremap df <esc>
 
 " Don't skip wrapped lines when navigating
 nnoremap j gj
 nnoremap k gk
-
-" Shortcuts
-set pastetoggle=<F2>
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -199,12 +196,6 @@ nnoremap <leader>o :Copen<cr>
 nnoremap <leader>g :TagsGenerate!<cr>
 nnoremap <leader>j :tjump<space>
 
-" Lusty Explorer bindings
-nnoremap <leader>e :LustyFilesystemExplorer<cr>
-nnoremap <leader>eh :LustyFilesystemExplorerFromHere<cr>
-nnoremap <leader>b :LustyBufferExplorer<cr>
-nnoremap <leader>/ :LustyBufferGrep<cr>
-
 " Gundo binding
 nnoremap <leader>u :GundoToggle<CR>
 
@@ -232,11 +223,6 @@ if &diff
     set statusline=%-10.3n  "buffer number
 endif
 
-" Make enter save. For clojure, live-reload associated process
-nnoremap <NL> :w!<CR>:Require<CR>
-
-nnoremap <F12> :%Eval<CR>:ClojureHighlightReferences<CR>
-
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Plugin Installation
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,21 +247,15 @@ nnoremap <F12> :%Eval<CR>:ClojureHighlightReferences<CR>
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-unimpaired'
-    Plugin 'Valloric/YouCompleteMe'
     Plugin 'scrooloose/syntastic'
-    Plugin 'sjbach/lusty'
     Plugin 'mileszs/ack.vim'
     Plugin 'szw/vim-tags'
     Plugin 'tpope/vim-dispatch'
     Plugin 'calebsmith/vim-lambdify'
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
-    Plugin 'reedes/vim-pencil'
-    Plugin 'benmills/vimux'
     Plugin 'scrooloose/nerdtree'
-    Plugin 'tpope/vim-fugitive'
     Plugin 'sjl/gundo.vim'
-    Plugin 'editorconfig/editorconfig-vim'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
@@ -310,12 +290,6 @@ let g:syntastic_c_checkers = ['splint']
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_rust_checkers = ['cargo']
-
-" YCM Configuration
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_filetype_blacklist = {'clojure': 1}
 
 " vim-tags Configuration
 let g:vim_tags_use_ycm = 1
@@ -374,26 +348,6 @@ let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
 " Don't autofold code
 let g:pymode_folding = 0
-
-" Vimux Configuration
-" -------------------
-" Prompt for a command to run
-nnoremap <Leader>vp :VimuxPromptCommand<CR>
-" Run last command executed by RunVimTmuxCommand
-nnoremap <Leader>vl :call _RunLast()<CR>
-" Close all other tmux panes in current window
-nnoremap <Leader>vq :VimuxCloseRunner<CR>
-" Interrupt any command running in the runner pane
-nnoremap <Leader>vi :VimuxInterruptRunner<CR>
-
-vnoremap <Leader><Space> "ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
-nnoremap <Leader><Space> vip"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>
-nnoremap <LocalLeader><Space> ggVG"ry :call VimuxSendText(@r)<CR>:call VimuxSendKeys("Enter")<CR>''
-
-
-" LiteDFM Configuration
-let g:lite_dfm_normal_bg_cterm = 234
-let g:lite_dfm_left_offset = 15
 
 " vim sexp
 let g:sexp_enable_insert_mode_mappings = 0
@@ -471,5 +425,3 @@ function! InsertTabWrapper()
 endfunction
 
 inoremap <expr><s-tab> pumvisible()?"\<c-p>":"\<c-d>"
-autocmd FileType clojure :autocmd VimEnter * inoremap <expr><tab> InsertTabWrapper()
-autocmd FileType clojure :autocmd BufEnter * inoremap <expr><tab> InsertTabWrapper()

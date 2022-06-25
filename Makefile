@@ -21,7 +21,8 @@ bin:
 	safe_copy bin/scmindent.rkt ~/bin/scmindent.rkt && \
 	safe_copy bin/android_helpers.sh ~/bin/android_helpers.sh && \
 	safe_copy bin/npm-completion.sh ~/bin/npm-completion.sh && \
-	safe_copy bin/git-completion.sh ~/bin/git-completion.sh)
+	safe_copy bin/git-completion.sh ~/bin/git-completion.sh && \
+	safe_copy bin/env_helper.sh ~/bin/env_helper.sh)
 
 
 tmux:
