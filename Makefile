@@ -11,6 +11,7 @@ all:
 	make xmonad
 	make lein
 	make spacemacs
+	make i3
 
 bin:
 	@(source ./safe_copy.sh; \
@@ -57,3 +58,8 @@ lein:
 spacemacs:
 	@(source ./safe_copy.sh; \
 	safe_copy spacemacs/spacemacs ~/.spacemacs)
+
+i3:
+	@(source ./safe_copy.sh; \
+	safe_copy i3/config ~/.config/i3/config)
+	i3-msg reload

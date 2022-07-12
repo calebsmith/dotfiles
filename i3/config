@@ -1,0 +1,303 @@
+
+#
+# Should you change your keyboard layout some time, delete
+# this file and re-run i3-config-wizard(1).
+#
+
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# You can use bindcode with any keyboard code if bindsym is giving problems. Check `xev -event keyboard` to get the kecode.
+
+set $mod Mod4
+set $mod2 Mod1
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# font pango:monospace 8
+# font pango:Hack 8
+font pango:DejaVu Sans Mono 10
+
+# Workspaces
+set $ws1  1:
+set $ws2  2:
+set $ws3  3:
+set $ws4  4:
+set $ws5  5:
+set $ws6  6:
+set $ws7  7:
+set $ws8  8:
+set $ws9  9:
+set $ws10  10:
+
+# Use vimlike keys instead of defaults
+set $up k
+set $down j
+set $left h
+set $right l
+
+set $bg-color 	         #231f25
+set $inactive-bg-color   #231f25
+set $text-color          #f3f4e9
+set $inactive-text-color #9f8f90
+set $urgent-bg-color     #ef0ba1
+
+client.focused          $bg-color           $bg-color          $text-color          #00ff00
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.urgent $urgent-bg-color $urgent-bg-color $text-color #00ff00
+
+#####################################################
+###############     Autostart      ##################
+#####################################################
+
+# run with reload
+exec_always --no-startup-id al-polybar-session
+exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id xrdb -load ~/.Xresources
+
+# run once
+exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F1'
+exec --no-startup-id al-compositor --start
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id xfsettingsd
+exec --no-startup-id lxpolkit
+
+###########################################################
+#############         Bindings           ##################
+###########################################################
+
+# class                 border  backgr. text    indicator
+# client.focused          #2E343c #2E343c #ffffff #2E343c
+# client.focused_inactive #2E343c #2E343c #eeeeee #2E343c
+# client.unfocused        #2E343c #2E343c #eeeeee #2E343c
+# client.urgent           #2E343c #2E343c #ffffff #2E343c
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+#
+
+# this is needed for super key to launch rofi
+bindsym $mod+space exec --no-startup-id rofr.sh -r
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+# start emacs
+bindsym $mod+shift+Return exec emacs
+
+bindsym $mod+Tab exec --no-startup-id rofi -show
+
+# kill focused window
+bindsym $mod+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec dmenu_run
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+$mod2+$left focus parent focus left
+bindsym $mod+$mod2+$down focus parent focus down
+bindsym $mod+$mod2+$up focus parent focus up
+bindsym $mod+$mod2+$right focus parent focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move workspace to output left
+bindsym $mod+Shift+$down move workspace to output down
+bindsym $mod+Shift+$up move workspace to output up
+bindsym $mod+Shift+$right move workspace to output right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod2+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left resize shrink width 5 px or 5 ppt
+        bindsym $down resize grow height 5 px or 5 ppt
+        bindsym $up resize shrink height 5 px or 5 ppt
+        bindsym $right resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize
+    bindsym t workspace $ws1; mode "default"
+    bindsym b workspace $ws2; mode "default"
+    bindsym s workspace $ws3; mode "default"
+    bindsym c workspace $ws4; mode "default"
+    bindsym m workspace $ws5; mode "default"
+    bindsym d workspace $ws6; mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+z mode "workspace"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# Enable browser pop-ups
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="Open Files"] floating enable
+
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+#for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable, focus
+for_window [class="(?i)(?:pinentry)"] floating enable, focus
+for_window [class="(?i)(?:thunar)"] focus
+#for_window [class="(?i)(?:firefox)"] floating enable, focus
+
+# Assign Applications to specific workspace
+# get class with xprop
+assign [class="(?i)(?:firefox)"] → $ws2
+assign [class="(?i)(?:chrome)"] → $ws2
+assign [class="(?i)(?:slack)"] $ws3
+assign [class="(?i)(?:emacs)"] $ws4
+assign [class="(?i)(?:spotify)"] $ws5
+assign [class="(?i)(?:zoom)"] $ws7
+assign [class="(?i)(?:thunar)"] $ws8
+
+# focus, floating, & sticky
+for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
+for_window [window_role="(?i)(?:pop-up|setup)"] floating enable
+
+# Rename workspace with i3-input using numbers and text
+
+# bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
+
+for_window [class="Chromium" instance="Chromium"] border none
+for_window [class="Chrome" instance="Chrome"] border none
+
+# Shutdown, Reboot, Lock Screen, and Logout
+
+set $power_mode "power"
+bindsym $mod+Shift+p      mode $power_mode
+mode $power_mode {
+    bindsym p        exec "i3-nagbar -t warning -m 'You pressed the shutdown shortcut. Do you really want to shutdown?' -b 'Yes, shutdown' 'systemctl poweroff'"; mode "default"
+    bindsym r        exec "systemctl reboot"; mode "default"
+    bindsym s        exec "systemctl suspend"
+    bindsym l        exec --no-startup-id playerctl stop; exec i3lock -t -i ~/Pictures/wallpapers/laincomputer.jpg; mode "default"
+    bindsym q        exec --no-startup-id i3-msg exit; mode "default"
+    bindsym x        exec --no-startup-id rofr.sh -l
+    bindsym Escape    mode "default"
+}
+
+# Control music/mmedia
+set $music_mode "music"
+bindsym $mod+m mode $music_mode
+mode $music_mode {
+  bindsym p         exec --no-startup-id playerctl play-pause; mode "default"
+  bindsym space     exec --no-startup-id playerctl play-pause; mode "default"
+  bindsym period    exec --no-startup-id playerctl next; mode "default"
+  bindsym comma     exec --no-startup-id playerctl previous; mode "default"
+  bindsym greater   exec --no-startup-id playerctl position; mode "default"
+  bindsym Escape    mode "default"
+}
+
+# logout script
+
+set $status_bg     #2E343c
+
+# Gaps
+smart_gaps on
+smart_borders on
+gaps inner 5
+gaps outer 10
+new_window pixel 0
+
+# # Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
+bindsym $mod  exec --no-startup-id light -U 10
+
+# AutoLaunch
+exec --no-startup-id dunst -config ~/.config/i3/dunstrc
+exec --no-startup-id tint2
+
