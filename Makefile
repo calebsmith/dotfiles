@@ -38,6 +38,7 @@ git:
 
 vim:
 	@(source ./safe_copy.sh; \
+	safe_copy vim/vimrc ~/.config/nvim/init.vim && \
 	safe_copy vim/vimrc ~/.vimrc)
 
 indent:
