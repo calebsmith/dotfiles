@@ -139,12 +139,6 @@ vnoremap <down> <nop>
 vnoremap <left> <nop>
 vnoremap <right> <nop>
 
-" Put escape on the home row
-inoremap jk <esc>
-inoremap kj <esc>
-inoremap fd <esc>
-inoremap df <esc>
-
 " Don't skip wrapped lines when navigating
 nnoremap j gj
 nnoremap k gk
@@ -251,7 +245,6 @@ endif
     Plugin 'mileszs/ack.vim'
     Plugin 'szw/vim-tags'
     Plugin 'tpope/vim-dispatch'
-    Plugin 'calebsmith/vim-lambdify'
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
     Plugin 'scrooloose/nerdtree'
