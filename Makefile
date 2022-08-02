@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-.PHONY: all bin tmux git vim indent xmonad lein spacemacs
+.PHONY: all bin tmux git vim indent xmonad lein spacemacs qmk
 
 all:
 	make bin
@@ -64,3 +64,10 @@ i3:
 	@(source ./safe_copy.sh; \
 	safe_copy i3/config ~/.config/i3/config)
 	i3-msg reload
+
+qmk:
+	@(source ./safe_copy.sh; \
+	safe_copy qmk/keymap.json $$QMK_HOME/keyboards/handwired/dactyl_manuform/5x6_5/keymaps/custom/keymap.json; \
+	[ $$safe_copy_result -ne 0 ] || qmk compile -kb handwired/dactyl_manuform/5x6_5 -km custom; \
+	qmk flash -kb handwired/dactyl_manuform/5x6_5 -km custom; \
+	qmk flash -kb handwired/dactyl_manuform/5x6_5 -km custom)
