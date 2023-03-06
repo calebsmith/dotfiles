@@ -1,6 +1,6 @@
 SHELL = /bin/bash
 
-.PHONY: all bin tmux git vim indent xmonad lein spacemacs qmk
+.PHONY: all bin tmux git vim indent xmonad lein emacs qmk
 
 all:
 	make bin
@@ -10,7 +10,7 @@ all:
 	make indent
 	make xmonad
 	make lein
-	make spacemacs
+	make emacs
 	make i3
 
 bin:
@@ -56,9 +56,10 @@ lein:
 	@(source ./safe_copy.sh; \
 	safe_copy lein/profiles.clj ~/.lein/profiles.clj)
 
-spacemacs:
+emacs:
 	@(source ./safe_copy.sh; \
-	safe_copy spacemacs/spacemacs ~/.spacemacs)
+	safe_copy emacs/init.el ~/.emacs && \
+	safe_copy emacs/config.org ~/.emacs)
 
 i3:
 	@(source ./safe_copy.sh; \
