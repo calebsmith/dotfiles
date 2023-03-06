@@ -10,9 +10,14 @@ tags
 .env
 .~lock.*
 *node_modules/
+target/
 .#*
 *.lsp
 *.clj-kondo
+.dir-locals.el
 /.lein-*
 /.nrepl-port
 /.shadow-cljs/
+caleb.cljs
+caleb.clj
+caleb.cljc
