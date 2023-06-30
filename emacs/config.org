@@ -24,7 +24,9 @@ startup by init.el
    default-directory "~/"
    )
 
-  (setq tab-width 2)
+  (setq-default indent-tabs-mode nil)
+  (setq tab-width 2
+        tab-stop-list '(2 4))
 
   ;; better scrolling experience
   (setq
@@ -36,22 +38,38 @@ startup by init.el
 
 #+END_SRC
 
+#+RESULTS:
+
 ** file backups
 #+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist `(("." . "~/.saves")))
-  (setq auto-save-visited-file-name t)
-  (setq auto-save-visited-mode t)
-  (setq make-backup-files nil)
+  (setq backup-directory-alist `(("." . "~/.saves"))
+        auto-save-visited-file-name t
+        auto-save-visited-mode t
+        make-backup-files nil)
 #+END_SRC
 
 ** Line numbers
 #+BEGIN_SRC emacs-lisp
-  (setq-default line-spacing 3
-                linum-format "%3d ")
+
+  (setq-default display-line-numbers-type 'relative
+                line-spacing 3
+                linum-format "%3d "
+                linum-relative-current-symbol "")
+
   (global-display-line-numbers-mode)
-  (setq display-line-numbers 'relative)
-  (setq linum-relative-current-symbol "")
+
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  cider-repl-mode-hook
+                  neotree-mode-hook
+                  xref-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 #+END_SRC
+
+#+RESULTS:
 
 ** Modernize selection behavior
 Replace the active region just by typing text, just like modern editors.
@@ -255,35 +273,52 @@ General provides useful binding utilities
                   dashboard-set-heading-icons t
                   dashboard-set-file-icons t
                   dashboard-banner-logo-title "Smithmacs")
+
+    (evil-collection-define-key '(normal visual) 'dashboard-mode-map
+      (kbd "RET") 'dashboard-return)
+
     (dashboard-setup-startup-hook))
 
+
+
 #+END_SRC
+
+
 *** Completions
 
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-    :straight t
-    :defer 3
-    :diminish company-mode global-company-mode
-    :config (global-company-mode +1)
-    :custom
-    (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
-    (company-idle-delay 0.15)
-    (company-selection-wrap-around t)
-    (company-minimum-prefix-length 2)
-    (company-statistics-file (state! "company/statistics.el"))
-    (company-tooltip-align-annotations t)
-    (company-require-match nil)
-    (company-tooltip-limit 10)
-    (company-tooltip-width-grow-only nil)
-    (company-format-margin-function #'company-text-icons-margin)
-    (company-text-icons-add-background t)
-    )
+      (use-package company
+        :straight t
+        :defer 3
+        :diminish company-mode global-company-mode
+        :config (global-company-mode +1)
+        :custom
+        (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
+        (company-idle-delay 0.15)
+        (company-selection-wrap-around t)
+        (company-minimum-prefix-length 2)
+        (company-statistics-file (state! "company/statistics.el"))
+        (company-tooltip-align-annotations t)
+        (company-require-match nil)
+        (company-tooltip-limit 10)
+        (company-tooltip-width-grow-only nil)
+        (company-format-margin-function #'company-text-icons-margin)
+        (company-text-icons-add-background t))
 
 
-(use-package company-box
-  :hook (company-mode . company-box-mode))
+    (use-package company-box
+      :hook (company-mode . company-box-mode))
+
+  (use-package yasnippet
+    :bind (:map yas-minor-mode-map
+           ("TAB" . nil)
+           ("<tab>" . nil))
+    :config
+    (yas-global-mode))
+
 #+END_SRC
+
+#+RESULTS:
 
 *** Selections
 #+BEGIN_SRC emacs-lisp
@@ -291,7 +326,6 @@ General provides useful binding utilities
     :straight t
     :diminish
     :config (progn
-              (require 'helm-config)
               (setq
                helm-quick-update t ; do not display invisible candidates
                helm-idle-delay 0.01 ; be idle for this many seconds, before updating in delayed sources.
@@ -342,6 +376,33 @@ pretty rainbows for lisp
     :hook (prog-mode . rainbow-delimiters-mode)
     :commands rainbow-delimiters-mode)
 #+END_SRC
+
+*** treesitter
+#+BEGIN_SRC emacs-lisp
+  (use-package tree-sitter
+    :hook ((rustic-mode python-mode
+                        json-mode
+                        js-mode
+                        js2-mode
+                        ;;typescript-mode
+                        go-mode sh-mode) . tree-sitter-mode)
+
+    :config (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+  (use-package tree-sitter-langs
+    :ensure t
+    :after tree-sitter
+    :config
+    (tree-sitter-require 'rust)
+    (tree-sitter-require 'typescript))
+#+END_SRC
+
+#+RESULTS:
+
+
+*** treesitter
+
+** Git Integration
 
 ** Git Integration
 Tell magit to automatically put us in vi-insert-mode when committing a change.
@@ -423,24 +484,28 @@ Vi bindings are efficient and friendly on the hands.
 Changed the default ~:q~ and ~:wq~ to be killing current buffer, instead of killing the frame or subsequently killing Emacs.
 Makes RETURN in normal mode save the file
 #+BEGIN_SRC emacs-lisp
-    (use-package evil
-      :straight t
-      :init
-      (setq evil-want-C-u-scroll t
-            evil-want-keybinding nil
-            evil-undo-system 'undo-redo
-            evil-shift-width 2)
-      :hook (after-init . evil-mode)
-      :preface
-      (defun save-and-kill-this-buffer+ ()
-        (interactive)
-        (save-buffer)
-        (kill-this-buffer))
-      :config
-      (evil-ex-define-cmd "q" #'kill-this-buffer)
-      (evil-ex-define-cmd "wq" #'save-and-kill-this-buffer+)
-  )
+  (use-package evil
+    :straight t
+    :init
+    (setq evil-want-C-u-scroll t
+          evil-want-keybinding nil
+          evil-undo-system 'undo-redo
+          evil-shift-width 2)
+    :hook (after-init . evil-mode)
+    :preface
+    (defun save-and-kill-this-buffer+ ()
+      (interactive)
+      (save-buffer)
+      (kill-this-buffer))
+    :config
+    (evil-ex-define-cmd "q" #'kill-this-buffer)
+    (evil-ex-define-cmd "wq" #'save-and-kill-this-buffer+)
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t)
+    )
 #+END_SRC
+
 
 Evil-collection covers more parts of Emacs that the original Evil
 doesn't support (e.g. Packages buffer, eshell, calendar etc.)
@@ -457,31 +522,30 @@ doesn't support (e.g. Packages buffer, eshell, calendar etc.)
 *** File browser
   Neotree for file browsing
   #+BEGIN_SRC emacs-lisp
-    (use-package neotree
-      :straight t
-      :defer 3
-      :commands neotree-toggle
-      :custom (neo-display-action
-               '((display-buffer-reuse-window
-                  display-buffer-in-side-window)
-                 (side . left)
-                 (body-function . nil)
-                 (window-parameters (mode-line-format . none)))
-               "Remove the mode-line format and prevent auto-selection.")
-      :config (setq neo-window-fixed-size nil
-                    neo-theme (if (display-graphic-p) 'icons 'classic)
+        (use-package neotree
+          :straight t
+          :defer 3
+          :commands neotree-toggle
+          :custom (neo-display-action '((display-buffer-reuse-window
+                                         display-buffer-in-side-window)
+                                        (side . left)
+                                        (body-function . nil)
+                                        (window-parameters (mode-line-format . none)))
+                                      "Remove the mode-line format and prevent auto-selection.")
+          :config (setq neo-window-fixed-size nil
+                        neo-theme (if (display-graphic-p) 'icons 'classic)
+                        neo-smart-open t)
 
-                    neo-smart-open t)
-      :general (local-leader-def+
-                :major-modes 'neotree-mode
-                :keymaps 'neotree-mode-map
-                "RET" 'neotree-quick-look
-                "o" 'neotree-open-file-in-system-application
-                "." 'neotree-hidden-file-toggle
-                "l" 'neotree-stretch-toggle
-                "z" 'neotree-collapse-all
-                "c" 'neotree-change-root))
-                    #+END_SRC
+          :general (local-leader-def+
+                     :major-modes 'neotree-mode
+                     :keymaps 'neotree-mode-map
+                     "RET" 'neotree-quick-look
+                     "o" 'neotree-open-file-in-system-application
+                     "." 'neotree-hidden-file-toggle
+                     "l" 'neotree-stretch-toggle
+                     "z" 'neotree-collapse-all
+                     "c" 'neotree-change-root))
+       #+END_SRC
 
 *** Diminish minor modes
 The diminish package is used to hide unimportant minor modes in the
@@ -574,12 +638,19 @@ Provides us with hints on available keystroke combinations.
     :hook ((clojure-mode . lsp)
            (clojurescript-mode . lsp)
            (clojurec-mode . lsp)
+           (typescript-mode . lsp-deferred)
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp
     :config (setq indent-region-function nil
+                  lsp-lens-enabled nil
                   lsp-enable-indentation nil
+                  lsp-enable-snippet nil
                   lsp-enable-on-type-formatting nil))
 #+END_SRC
+
+#+RESULTS:
+| lsp-enable-which-key-integration |
+
 *** Indent
 #+BEGIN_SRC emacs-lisp
   (use-package aggressive-indent
@@ -617,29 +688,71 @@ Provides us with hints on available keystroke combinations.
 
   (use-package web-mode
     :mode (("\\.html?\\'" . web-mode)
-           ("\\.jsx?\\'"  . web-mode)
-           ("\\.tsx?\\'"  . web-mode))
-    :config
-    (setq
-     js-indent-level 2
-     web-mode-enable-auto-pairing t
-     web-mode-enable-css-colorization t
-     web-mode-enable-comment-interpolation t
-     web-mode-enable-block-face t
-     web-mode-style-padding 2
-     web-mode-script-padding 2
-     web-mode-markup-indent-offset 2
-     web-mode-css-indent-offset 2
-     web-mode-attr-indent-offset 2
-     web-mode-code-indent-offset 2
-     web-mode-enable-auto-indentation nil
-     web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
+           ("\\.jsx?\\'"  . web-mode))
+    :config (setq
+             ;;js-indent-level 2
+             web-mode-enable-auto-pairing t
+             web-mode-enable-css-colorization t
+             web-mode-enable-comment-interpolation t
+             web-mode-enable-block-face t
+             web-mode-style-padding 2
+             web-mode-script-padding 2
+             web-mode-markup-indent-offset 2
+             web-mode-css-indent-offset 2
+             web-mode-attr-indent-offset 2
+             web-mode-code-indent-offset 2
+             web-mode-enable-auto-indentation nil
+             web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
 
   (use-package json-mode
     :interpreter "node"
     :mode (("\\.json$" . json-mode)))
 
 #+END_SRC
+
+*** TypeScript
+
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :defer t
+    :after (flycheck tree-sitter)
+    :config
+    (setq typescript-indent-level 2)
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
+           #+END_SRC
+
+*** Python
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python-mode)
+
+  (use-package elpy
+    :defer t
+    :init (advice-add 'python-mode :before 'elpy-enable)
+    :config (when (load "flycheck" t t)
+              (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+              (add-hook 'elpy-mode-hook 'flycheck-mode)
+              (add-hook 'elpy-mode-hook (lambda ()
+                                          (add-hook 'before-save-hook
+                                                    'elpy-format-code nil t)))))
+    #+END_SRC
+
+*** Lua
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lua-mode)
+#+END_SRC
+*** Terraform
+#+BEGIN_SRC emacs-lisp
+  (use-package terraform-mode
+    :straight t
+    :custom (terraform-indent-level 2)
+    :config
+    (defun my-terraform-mode-init ()
+      (outline-minor-mode 1))
+    (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
+#+END_SRC
+
 
 *** Clojure
 #+BEGIN_SRC emacs-lisp
@@ -660,13 +773,23 @@ Provides us with hints on available keystroke combinations.
     (setq clojure-indent-style 'align-arguments
           cider-save-file-on-load t)
 
+    (add-hook 'cider-stacktrace-mode-hook
+              (lambda ()
+                (set (make-local-variable 'comment-start) ";;")
+                (set (make-local-variable 'comment-end) "\n")))
+
     (define-clojure-indent
       (as-> 0)
       (cond-> 0)
       (cond->> 0)
+      (when-let 1)
       (fact 0)
       (facts 0)
       (go-try 0)
+      (go-try-with-lock 0)
+      (GET 0)
+      (POST 0)
+      (timeit 0)
       (go 0)
       (go-try-timeit 1)
       (manifold.deferred/let-flow 1)
@@ -889,6 +1012,8 @@ Provides us with hints on available keystroke combinations.
       "pv" 'cider-profile-var-profiled-p)
     )
 
+
+
   (use-package cider
     :straight t
     :preface
@@ -946,22 +1071,22 @@ Provides us with hints on available keystroke combinations.
 *** Org Mode
 Remove annoying babel warnings and make the bullets pretty.
 #+BEGIN_SRC emacs-lisp
-    (use-package org
-      :config
-      (setq org-confirm-babel-evaluate (lambda (l b) nil)
-            org-link-shell-confirm-function (lambda (l b) nil)
-            org-link-elisp-confirm-function (lambda (l b) nil))
-      :hook ((org-mode . visual-line-mode)
-             (org-mode . org-indent-mode))
+  (use-package org
+    :config
+    (setq org-confirm-babel-evaluate (lambda (l b) nil)
+          org-link-shell-confirm-function (lambda (l b) nil)
+          org-link-elisp-confirm-function (lambda (l b) nil))
+    :hook ((org-mode . visual-line-mode)
+           (org-mode . org-indent-mode))
 
-      :general
-(local-leader-def+
-                :major-modes 'org-mode
-                :keymaps 'org-mode-map
-                "TAB" 'org-ctrl-c-tab
-                ))
+    :general
+    (local-leader-def+
+      :major-modes 'org-mode
+      :keymaps 'org-mode-map
+      "TAB" 'org-ctrl-c-tab
+      ))
 
-    (use-package org-bullets :hook (org-mode . org-bullets-mode))
+  (use-package org-bullets :hook (org-mode . org-bullets-mode))
 #+END_SRC
 
 
@@ -969,6 +1094,16 @@ Remove annoying babel warnings and make the bullets pretty.
 
 *** Global binds in states
 #+BEGIN_SRC emacs-lisp
+
+  (defun save-eval+ ()
+    (interactive)
+    (call-interactively 'evil-write)
+    (pcase major-mode
+      ('clojure-mode (cider-eval-buffer))
+      ('clojurescript-mode (cider-eval-buffer))
+      ('clojurec-mode (cider-eval-buffer))
+      (_ (ignore nil))))
+
   (defun auto-eval+ ()
     (interactive)
     (pcase major-mode
@@ -981,12 +1116,15 @@ Remove annoying babel warnings and make the bullets pretty.
   (general-define-key
    :states 'normal
    " " 'auto-eval+
+   "A-<return>" 'evil-write+
    "gr" 'lsp-find-references
    "gi" 'lsp-find-implementation
-   "RET" 'evil-write
+   "RET" 'save-eval+
    "M-q" 'save-buffers-kill-terminal
    )
       #+END_SRC
+
+      #+RESULTS:
 
 *** Global leader
 #+BEGIN_SRC emacs-lisp
@@ -1050,6 +1188,16 @@ Remove annoying babel warnings and make the bullets pretty.
     "l" 'bookmark-bmenu-list
     )
 #+END_SRC
+*** Errors
+
+
+#+BEGIN_SRC emacs-lisp
+  (leader-submenu-def+ "errors" "e"
+    "l" 'flycheck-list-errors
+    "n" 'flycheck-next-error
+    "p" 'flycheck-previous-error
+    )
+#+END_SRC
 
 *** Toggles
 #+BEGIN_SRC emacs-lisp
@@ -1058,6 +1206,7 @@ Remove annoying babel warnings and make the bullets pretty.
     "i" 'aggressive-indent-mode
     "p" 'paredit-mode
     )
+
 #+END_SRC
 
 #+RESULTS:
