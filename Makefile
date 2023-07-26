@@ -58,8 +58,8 @@ lein:
 
 emacs:
 	@(source ./safe_copy.sh; \
-	safe_copy emacs/init.el ~/.emacs && \
-	safe_copy emacs/config.org ~/.emacs)
+	safe_copy emacs/init.el ~/.emacs.d/init.el && \
+	safe_copy emacs/config.org ~/.emacs.d/config.org)
 
 i3:
 	@(source ./safe_copy.sh; \
