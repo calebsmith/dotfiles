@@ -1,4 +1,5 @@
-#+Title: Emacs Config
+
+
 #+Author: Caleb Smith
 #+Date: 2022
 The elisp in this org file is extracted into config.el and run at
@@ -7,34 +8,35 @@ startup by init.el
 
 ** Defaults
 #+BEGIN_SRC emacs-lisp
-  ;; Turn off the annoying modes and behaviors
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (tooltip-mode -1)
-  (scroll-bar-mode -1)
-  (setq
-   inhibit-startup-screen t
-   inhibit-startup-message t
-   initial-scratch-message ""
-   inhibit-startup-echo-area-message t
-   show-help-function nil
-   visible-bell -1
-   ring-bell-function 'ignore
-   frame-resize-pixelwise t
-   default-directory "~/"
-   )
+       ;; Turn off the annoying modes and behaviors
+       (menu-bar-mode -1)
+       (tool-bar-mode -1)
+       (tooltip-mode -1)
+       (scroll-bar-mode -1)
+       (setq
+        inhibit-startup-screen t
+        inhibit-startup-message t
+        initial-scratch-message ""
+        inhibit-startup-echo-area-message t
+        show-help-function nil
+        visible-bell -1
+        ring-bell-function 'ignore
+        frame-resize-pixelwise t
+        default-directory "~/")
 
-  (setq-default indent-tabs-mode nil)
-  (setq tab-width 2
-        tab-stop-list '(2 4))
+       (setq-default
+         indent-tabs-mode nil
+         tab-width 2
+         standard-indent 2)
+       (setq tab-stop-list '(2 4))
 
-  ;; better scrolling experience
-  (setq
-   scroll-margin 0
-   scroll-conservatively 101 ; > 100
-   scroll-preserve-screen-position t
-   auto-window-vscroll nil
-   )
+       ;; better scrolling experience
+       (setq
+        scroll-margin 0
+        scroll-conservatively 101 ; > 100
+        scroll-preserve-screen-position t
+        auto-window-vscroll nil
+        )
 
 #+END_SRC
 
@@ -268,6 +270,7 @@ General provides useful binding utilities
 *** Dashboard welcome page
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
+    :after  (evil evil-collection)
     :hook ((after-init . dashboard-refresh-buffer))
     :config (setq dashboard-startup-banner 'logo
                   dashboard-set-heading-icons t
@@ -287,34 +290,36 @@ General provides useful binding utilities
 *** Completions
 
 #+BEGIN_SRC emacs-lisp
-      (use-package company
-        :straight t
-        :defer 3
-        :diminish company-mode global-company-mode
-        :config (global-company-mode +1)
-        :custom
-        (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
-        (company-idle-delay 0.15)
-        (company-selection-wrap-around t)
-        (company-minimum-prefix-length 2)
-        (company-statistics-file (state! "company/statistics.el"))
-        (company-tooltip-align-annotations t)
-        (company-require-match nil)
-        (company-tooltip-limit 10)
-        (company-tooltip-width-grow-only nil)
-        (company-format-margin-function #'company-text-icons-margin)
-        (company-text-icons-add-background t))
+        (use-package company
+          :straight t
+          :defer 3
+          :diminish company-mode global-company-mode
+          :bind (:map company-active-map
+                  ("<tab>" . company-complete-selection))
+                ;;(:map lsp-mode-map ("<tab>" . company-indent-or-complete-common))
+          :config (global-company-mode +1)
+          :custom
+          (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
+          (company-idle-delay 0.15)
+          (company-selection-wrap-around t)
+          (company-minimum-prefix-length 2)
+          (company-statistics-file (state! "company/statistics.el"))
+          (company-tooltip-align-annotations t)
+          (company-require-match nil)
+          (company-tooltip-limit 10)
+          (company-tooltip-width-grow-only nil)
+          (company-format-margin-function #'company-text-icons-margin)
+          (company-text-icons-add-background t))
 
+      (use-package company-box
+        :hook (company-mode . company-box-mode))
 
-    (use-package company-box
-      :hook (company-mode . company-box-mode))
-
-  (use-package yasnippet
-    :bind (:map yas-minor-mode-map
-           ("TAB" . nil)
-           ("<tab>" . nil))
-    :config
-    (yas-global-mode))
+    (use-package yasnippet
+      :bind (:map yas-minor-mode-map
+             ("TAB" . nil)
+             ("<tab>" . nil))
+      :config
+      (yas-global-mode))
 
 #+END_SRC
 
@@ -379,25 +384,27 @@ pretty rainbows for lisp
 
 *** treesitter
 #+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter
-    :hook ((rustic-mode python-mode
-                        json-mode
-                        js-mode
-                        js2-mode
-                        ;;typescript-mode
-                        go-mode sh-mode) . tree-sitter-mode)
+   (use-package tree-sitter
+     :hook ((rustic-mode python-mode
+                         json-mode
+                         js-mode
+                         js2-mode
+                         ;;typescript-mode
+                         sh-mode) . tree-sitter-mode)
 
-    :config (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+     :config (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
-  (use-package tree-sitter-langs
-    :ensure t
-    :after tree-sitter
-    :config
-    (tree-sitter-require 'rust)
-    (tree-sitter-require 'typescript))
+   (use-package tree-sitter-langs
+     :ensure t
+     :after tree-sitter
+     :config
+     (tree-sitter-require 'rust)
+     (tree-sitter-require 'go)
+     (tree-sitter-require 'typescript))
 #+END_SRC
 
 #+RESULTS:
+: t
 
 
 *** treesitter
@@ -635,21 +642,21 @@ Provides us with hints on available keystroke combinations.
     :after evil
     :init (setq lsp-keymap-prefix "C-c l"
                 lsp-enable-file-watchers nil)
-    :hook ((clojure-mode . lsp)
-           (clojurescript-mode . lsp)
-           (clojurec-mode . lsp)
-           (typescript-mode . lsp-deferred)
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp
+    :hook ((clojure-mode clojurec-mode clojurescript-mode typescript-mode python-mode go-mode) . lsp-deferred)
+    :commands (lsp lsp-mode lsp-deferred)
     :config (setq indent-region-function nil
                   lsp-lens-enabled nil
                   lsp-enable-indentation nil
                   lsp-enable-snippet nil
-                  lsp-enable-on-type-formatting nil))
+                  lsp-enable-on-type-formatting nil
+                  lsp-prefer-flymake nil
+                  lsp-modeline-code-actions-enable nil)
+    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+  (use-package lsp-ui :commands lsp-ui-mode)
 #+END_SRC
 
 #+RESULTS:
-| lsp-enable-which-key-integration |
 
 *** Indent
 #+BEGIN_SRC emacs-lisp
@@ -737,6 +744,19 @@ Provides us with hints on available keystroke combinations.
                                                     'elpy-format-code nil t)))))
     #+END_SRC
 
+*** Golang
+
+#+BEGIN_SRC emacs-lisp
+      (use-package go-mode
+        :mode "\\.go\\'"
+        :config (defun my-go-mode-setup ()
+                  "Basic Go mode setup."
+                  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+        (add-hook 'go-mode-hook #'my-go-mode-setup))
+
+#+END_SRC
+
 *** Lua
 
 #+BEGIN_SRC emacs-lisp
@@ -801,6 +821,7 @@ Provides us with hints on available keystroke combinations.
       (reg-sub 1)
       (server.pgs/go-try-trx 1)
       (go-try-trx 1)
+      (match 0)
       (uf/reg-sub 1))
 
     (add-hook 'cider-mode
