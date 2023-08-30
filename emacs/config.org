@@ -1,5 +1,3 @@
-
-
 #+Author: Caleb Smith
 #+Date: 2022
 The elisp in this org file is extracted into config.el and run at
@@ -8,45 +6,43 @@ startup by init.el
 
 ** Defaults
 #+BEGIN_SRC emacs-lisp
-       ;; Turn off the annoying modes and behaviors
-       (menu-bar-mode -1)
-       (tool-bar-mode -1)
-       (tooltip-mode -1)
-       (scroll-bar-mode -1)
-       (setq
-        inhibit-startup-screen t
-        inhibit-startup-message t
-        initial-scratch-message ""
-        inhibit-startup-echo-area-message t
-        show-help-function nil
-        visible-bell -1
-        ring-bell-function 'ignore
-        frame-resize-pixelwise t
-        default-directory "~/")
+  ;; Turn off the annoying modes and behaviors
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (scroll-bar-mode -1)
+  (setq
+   inhibit-startup-screen t
+   inhibit-startup-message t
+   initial-scratch-message ""
+   inhibit-startup-echo-area-message t
+   show-help-function nil
+   visible-bell -1
+   ring-bell-function 'ignore
+   frame-resize-pixelwise t
+   default-directory "~/")
 
-       (setq-default
-         indent-tabs-mode nil
-         tab-width 2
-         standard-indent 2)
-       (setq tab-stop-list '(2 4))
+  ;; Tabs
+  (setq-default
+   indent-tabs-mode nil
+   tab-width 2
+   standard-indent 2)
+  (setq tab-stop-list '(2 4))
 
-       ;; better scrolling experience
-       (setq
-        scroll-margin 0
-        scroll-conservatively 101 ; > 100
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        )
-
+  ;; better scrolling experience
+  (setq
+   scroll-margin 0
+   scroll-conservatively 101 ; > 100
+   scroll-preserve-screen-position t
+   auto-window-vscroll nil)
 #+END_SRC
-
-#+RESULTS:
 
 ** file backups
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . "~/.saves"))
         auto-save-visited-file-name t
         auto-save-visited-mode t
+
         make-backup-files nil)
 #+END_SRC
 
@@ -71,8 +67,6 @@ startup by init.el
 
 #+END_SRC
 
-#+RESULTS:
-
 ** Modernize selection behavior
 Replace the active region just by typing text, just like modern editors.
 #+BEGIN_SRC emacs-lisp
@@ -96,8 +90,7 @@ Auto refreshes file content and version control status every 2 seconds
 #+BEGIN_SRC emacs-lisp
     (use-package autorevert
       :ensure nil
-      :config
-      (global-auto-revert-mode +1)
+      :config (global-auto-revert-mode 1)
       (revert-buffer t t)
 
       (setq auto-revert-interval 2
@@ -246,9 +239,7 @@ General provides useful binding utilities
       (doom-themes-visual-bell-config)
       ;; Corrects (and improves) org-mode's native fontification.
       (doom-themes-org-config)
-      (set-background-color "black")
-
-  )
+      (set-background-color "black"))
 #+END_SRC
 
 *** mode line
@@ -282,44 +273,43 @@ General provides useful binding utilities
 
     (dashboard-setup-startup-hook))
 
-
-
 #+END_SRC
-
 
 *** Completions
 
 #+BEGIN_SRC emacs-lisp
-        (use-package company
-          :straight t
-          :defer 3
-          :diminish company-mode global-company-mode
-          :bind (:map company-active-map
-                  ("<tab>" . company-complete-selection))
-                ;;(:map lsp-mode-map ("<tab>" . company-indent-or-complete-common))
-          :config (global-company-mode +1)
-          :custom
-          (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
-          (company-idle-delay 0.15)
-          (company-selection-wrap-around t)
-          (company-minimum-prefix-length 2)
-          (company-statistics-file (state! "company/statistics.el"))
-          (company-tooltip-align-annotations t)
-          (company-require-match nil)
-          (company-tooltip-limit 10)
-          (company-tooltip-width-grow-only nil)
-          (company-format-margin-function #'company-text-icons-margin)
-          (company-text-icons-add-background t))
+  (use-package company
+    :straight t
+    :after lsp
+    :defer 3
+    :diminish company-mode global-company-mode
+    :bind (:map company-active-map
+                ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    :config (global-company-mode +1)
+    :custom
+    (company-tooltip-idle-delay nil "Show the completion tooltip without any delay.")
+    (company-idle-delay 0.15)
+    (company-selection-wrap-around t)
+    (company-minimum-prefix-length 2)
+    (company-statistics-file (state! "company/statistics.el"))
+    (company-tooltip-align-annotations t)
+    (company-require-match nil)
+    (company-tooltip-limit 10)
+    (company-tooltip-width-grow-only nil)
+    (company-format-margin-function #'company-text-icons-margin)
+    (company-text-icons-add-background t))
 
-      (use-package company-box
-        :hook (company-mode . company-box-mode))
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 
-    (use-package yasnippet
-      :bind (:map yas-minor-mode-map
-             ("TAB" . nil)
-             ("<tab>" . nil))
-      :config
-      (yas-global-mode))
+  (use-package yasnippet
+    :bind (:map yas-minor-mode-map
+                ("TAB" . nil)
+                ("<tab>" . nil))
+    :config
+    (yas-global-mode))
 
 #+END_SRC
 
@@ -402,14 +392,6 @@ pretty rainbows for lisp
      (tree-sitter-require 'go)
      (tree-sitter-require 'typescript))
 #+END_SRC
-
-#+RESULTS:
-: t
-
-
-*** treesitter
-
-** Git Integration
 
 ** Git Integration
 Tell magit to automatically put us in vi-insert-mode when committing a change.
@@ -637,26 +619,33 @@ Provides us with hints on available keystroke combinations.
 
 *** LSP
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :straight t
-    :after evil
-    :init (setq lsp-keymap-prefix "C-c l"
-                lsp-enable-file-watchers nil)
-    :hook ((clojure-mode clojurec-mode clojurescript-mode typescript-mode python-mode go-mode) . lsp-deferred)
-    :commands (lsp lsp-mode lsp-deferred)
-    :config (setq indent-region-function nil
-                  lsp-lens-enabled nil
-                  lsp-enable-indentation nil
-                  lsp-enable-snippet nil
-                  lsp-enable-on-type-formatting nil
-                  lsp-prefer-flymake nil
-                  lsp-modeline-code-actions-enable nil)
-    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+    (use-package lsp-mode
+      :straight t
+      :after evil
+      :init (setq lsp-keymap-prefix "C-c l"
+                  lsp-enable-file-watchers nil)
+      :hook ((clojure-mode clojurec-mode clojurescript-mode typescript-mode python-mode go-mode) . lsp-deferred)
+      :commands (lsp lsp-mode lsp-deferred)
+      :config (setq indent-region-function nil
+                    lsp-lens-enabled nil
+                    lsp-enable-indentation nil
+                    lsp-enable-snippet nil
+                    lsp-enable-on-type-formatting nil
+                    lsp-prefer-flymake nil
+                    lsp-modeline-code-actions-enable nil
+                    lsp-ui-peek-always-show t)
+      (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
 
-  (use-package lsp-ui :commands lsp-ui-mode)
+    :general (local-leader-def+
+                :major-modes 'lsp-mode
+                :keymaps 'lsp-mode-map
+                "rr" 'lsp-rename
+                "gd" 'lsp-ui-peek-find-definitions
+                "gr" 'lsp-ui-peek-find-references
+                "gh" 'lsp-ui-doc-show))
+
+    (use-package lsp-ui :commands lsp-ui-mode)
 #+END_SRC
-
-#+RESULTS:
 
 *** Indent
 #+BEGIN_SRC emacs-lisp
@@ -666,6 +655,13 @@ Provides us with hints on available keystroke combinations.
 #+END_SRC
 
 ** Programming language support and utilities
+*** Makefile
+#+BEGIN_SRC emacs-lisp
+  (use-package makefile-executor
+    :config (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+
+#+END_SRC
+
 *** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
@@ -675,16 +671,17 @@ Provides us with hints on available keystroke combinations.
 
 *** Misc modes
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode
-  :mode "\\.ya*ml$")
 
-(use-package graphql-mode
-  :mode "\\.gql$")
+         (use-package yaml-mode
+           :mode "\\.ya*ml$")
 
-(use-package dotenv-mode
-  :mode "\\.env")
+         (use-package graphql-mode
+           :mode "\\.gql$")
 
-(use-package dockerfile-mode)
+         (use-package dotenv-mode
+           :mode "\\.env")
+
+         (use-package dockerfile-mode)
 #+END_SRC
 
 *** Web modes
@@ -747,13 +744,12 @@ Provides us with hints on available keystroke combinations.
 *** Golang
 
 #+BEGIN_SRC emacs-lisp
-      (use-package go-mode
-        :mode "\\.go\\'"
-        :config (defun my-go-mode-setup ()
-                  "Basic Go mode setup."
-                  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-        (add-hook 'go-mode-hook #'my-go-mode-setup))
+  (use-package go-mode
+    :mode "\\.go\\'"
+    :config (defun my-go-mode-setup ()
+              "Basic Go mode setup."
+              (add-hook 'before-save-hook #'lsp-organize-imports t t))
+    (add-hook 'go-mode-hook #'my-go-mode-setup))
 
 #+END_SRC
 
@@ -802,27 +798,13 @@ Provides us with hints on available keystroke combinations.
       (as-> 0)
       (cond-> 0)
       (cond->> 0)
-      (when-let 1)
       (fact 0)
       (facts 0)
       (go-try 0)
-      (go-try-with-lock 0)
       (GET 0)
       (POST 0)
-      (timeit 0)
       (go 0)
-      (go-try-timeit 1)
-      (manifold.deferred/let-flow 1)
-      (d/let-flow 1)
-      (pg/go-try-trx 1)
-      (red.core/reg-sig 1)
-      (red/reg-sig 1)
-      (reg-sig 1)
-      (reg-sub 1)
-      (server.pgs/go-try-trx 1)
-      (go-try-trx 1)
-      (match 0)
-      (uf/reg-sub 1))
+      (match 0))
 
     (add-hook 'cider-mode
               (lambda ()
@@ -1085,10 +1067,6 @@ Provides us with hints on available keystroke combinations.
   (use-package helm-cider :config (helm-cider-mode 1))
   #+END_SRC
 
-  #+RESULTS:
-
-
-
 *** Org Mode
 Remove annoying babel warnings and make the bullets pretty.
 #+BEGIN_SRC emacs-lisp
@@ -1145,8 +1123,6 @@ Remove annoying babel warnings and make the bullets pretty.
    )
       #+END_SRC
 
-      #+RESULTS:
-
 *** Global leader
 #+BEGIN_SRC emacs-lisp
   (leader-def+
@@ -1160,6 +1136,7 @@ Remove annoying babel warnings and make the bullets pretty.
     "'" 'eshell
     "&" 'async-shell-command
     "u" 'universal-argument
+    "c" 'uncomment-region
 
     "g" '(:ignore t :wk "git")
     "p" '(:ignore t :wk "project")
@@ -1167,6 +1144,8 @@ Remove annoying babel warnings and make the bullets pretty.
     )
 
 #+END_SRC
+
+#+RESULTS:
 
 *** Windows
 #+BEGIN_SRC emacs-lisp
@@ -1216,18 +1195,24 @@ Remove annoying babel warnings and make the bullets pretty.
   (leader-submenu-def+ "errors" "e"
     "l" 'flycheck-list-errors
     "n" 'flycheck-next-error
-    "p" 'flycheck-previous-error
-    )
+    "p" 'flycheck-previous-error)
 #+END_SRC
 
 *** Toggles
 #+BEGIN_SRC emacs-lisp
   (leader-submenu-def+ "toggles" "t"
-    "c" 'evil-cleverparens-mode
-    "i" 'aggressive-indent-mode
-    "p" 'paredit-mode
-    )
+   "r" 'global-auto-revert-mode
+   "c" 'evil-cleverparens-mode
+   "i" 'aggressive-indent-mode
+   "p" 'paredit-mode)
 
 #+END_SRC
 
-#+RESULTS:
+*** Make
+#+BEGIN_SRC emacs-lisp
+    (leader-submenu-def+ "make" "RET"
+        "f" 'makefile-executor-goto-makefile
+        "RET" 'makefile-executor-execute-project-target
+        "." 'makefile-executor-execute-last
+        "SPC" 'makefile-executor-execute-last)
+#+END_SRC
