@@ -190,9 +190,6 @@ nnoremap <leader>o :Copen<cr>
 nnoremap <leader>g :TagsGenerate!<cr>
 nnoremap <leader>j :tjump<space>
 
-" Gundo binding
-nnoremap <leader>u :GundoToggle<CR>
-
 " Ack.vim bindings
 nnoremap <leader>a :tab split<CR>:Ack ""<Left>
 nnoremap <leader>* :tab split<CR>:Ack <C-r><C-w><CR>
@@ -245,10 +242,8 @@ endif
     Plugin 'mileszs/ack.vim'
     Plugin 'szw/vim-tags'
     Plugin 'tpope/vim-dispatch'
-    Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
     Plugin 'scrooloose/nerdtree'
-    Plugin 'sjl/gundo.vim'
     " Python
     Plugin 'pfdevilliers/Pretty-Vim-Python'
     " JavaScript
@@ -399,22 +394,3 @@ if !exists("g:show_column_toggle")
     let g:show_column_toggle = 0
     call ToggleColorColumn()
 endif
-
-
-" Set Lisp indentation using racket script
-autocmd filetype lisp,scheme,art setlocal equalprg=scmindent.rkt
-
-" Omnicomplete tab wrapper for clojure where YCM is disabled
-
-function! InsertTabWrapper()
-  if pumvisible()
-    return "\<c-n>"
-  endif
-  if strpart(getline('.'), 0, col('.') - 1) =~ '.*(\S*$'
-    return "\<c-x>\<c-o>"
-  else
-    return "\<tab>"
-  endif
-endfunction
-
-inoremap <expr><s-tab> pumvisible()?"\<c-p>":"\<c-d>"
