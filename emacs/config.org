@@ -658,8 +658,19 @@ Provides us with hints on available keystroke combinations.
 *** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
-    :hook (markdown-mode . visual-line-mode))
+    :init
+    (setq-default markdown-hide-markup t)
+    (setq markdown-fontify-code-blocks-natively t))
 
+  (use-package obsidian
+    :after evil
+    :demand t
+    :config
+    (obsidian-specify-path "~/notes")
+    (global-obsidian-mode t)
+    (evil-collection-define-key '(normal visual) 'obsidian-mode-map
+      (kbd "RET") 'evil-write
+      "gd" 'obsidian-follow-link-at-point))
 #+END_SRC
 
 *** Misc modes
